@@ -596,7 +596,6 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
             HashMap map = new HashMap();
             try {
                 map.put("id_coluna", (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
-                map.put("img", Thread.currentThread().getClass().getResourceAsStream("/Reports/ArrowUp.png"));
                 Reports.imprimir("EtiquetaColuna.jasper", map);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);

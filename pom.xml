@@ -8,6 +8,7 @@
     <modules>
         <module>Biblioteca</module>
         <module>Colunas</module>
+        <module>Reagentes</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
