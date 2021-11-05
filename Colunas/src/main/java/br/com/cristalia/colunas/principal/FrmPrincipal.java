@@ -34,7 +34,6 @@ import br.com.cristalia.colunas.view.FrmColunaConfig;
 import br.com.cristalia.colunas.view.FrmColunaStorage;
 import br.com.cristalia.colunas.view.FrmColunaVaga;
 import br.com.cristalia.colunas.view.FrmColunasCromatograficas;
-import br.com.cristalia.colunas.view.FrmDocumentos;
 import java.awt.AWTEvent;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
@@ -56,7 +55,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlColunaStorage.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmColunaStorage.class.getSimpleName())));
         pnlColunaVaga.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmColunaVaga.class.getSimpleName())));
         pnlColunas.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmColuna.class.getSimpleName())));
-        pnlDocumentos.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmDocumentos.class.getSimpleName())));
         pnlColunas.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmColunaConfig.class.getSimpleName())));
         carregar();
         checkTempoInatividade();
@@ -86,10 +84,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        pnlDocumentos = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         lblLaboratorio = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         pnlCadastroColunas = new javax.swing.JPanel();
@@ -220,37 +214,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel26.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlColunaStorage.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 70, -1));
 
-        pnlDocumentos.setBackground(new java.awt.Color(255, 255, 255));
-        pnlDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseExited(evt);
-            }
-        });
-        pnlDocumentos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_attach_32.png"))); // NOI18N
-        jLabel28.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
-
-        jLabel29.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel29.setText("Digitalizados");
-        jLabel29.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 110, -1));
-
-        jLabel30.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel30.setText("Documentos");
-        jLabel30.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 6, 110, -1));
-
         lblLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLaboratorio.setText("Colunas Cromatográficas");
 
@@ -347,10 +310,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                                 .addComponent(pnlColunaVaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(pnlColunas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(pnlCadastroColunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(pnlDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(pnlCadastroColunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 252, Short.MAX_VALUE))))
         );
         pnlPrincipalLayout.setVerticalGroup(
@@ -368,9 +328,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlCadastroColunas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlCadastroColunas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(407, Short.MAX_VALUE))
         );
 
@@ -421,18 +379,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void pnlColunaStorageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlColunaStorageMouseExited
         MouseEventButton.setMouseExited(pnlColunaStorage);
     }//GEN-LAST:event_pnlColunaStorageMouseExited
-
-    private void pnlDocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseClicked
-        Frames.carregarJFrame(FrmDocumentos.class);
-    }//GEN-LAST:event_pnlDocumentosMouseClicked
-
-    private void pnlDocumentosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseEntered
-        MouseEventButton.setMouseEntered(pnlDocumentos);
-    }//GEN-LAST:event_pnlDocumentosMouseEntered
-
-    private void pnlDocumentosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseExited
-        MouseEventButton.setMouseExited(pnlDocumentos);
-    }//GEN-LAST:event_pnlDocumentosMouseExited
 
     private void pnlCadastroColunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlCadastroColunasMouseClicked
         Frames.carregarJFrame(FrmColuna.class);
@@ -513,9 +459,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
@@ -532,7 +475,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlColunaStorage;
     private javax.swing.JPanel pnlColunaVaga;
     private javax.swing.JPanel pnlColunas;
-    private javax.swing.JPanel pnlDocumentos;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPanel pnlTopMenu;
     // End of variables declaration//GEN-END:variables

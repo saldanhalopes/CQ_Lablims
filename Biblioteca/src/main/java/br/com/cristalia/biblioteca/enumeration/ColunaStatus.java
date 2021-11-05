@@ -24,7 +24,8 @@ public enum ColunaStatus {
 
     ATIVOS("Ativos"),
     INATIVOS("Inativos"),
-    TODOS("Todos");
+    TODOS("Todos"),
+    ESTOQUE("Estoque");
 
     private String tipo;
 

@@ -130,7 +130,8 @@
                     <Component class="javax.swing.JTable" name="tblColuna">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="13" rowCount="0">
+                          <Table columnCount="14" rowCount="0">
+                            <Column editable="false" title="" type="java.lang.Object"/>
                             <Column editable="false" title="Col_Id" type="java.lang.Integer"/>
                             <Column editable="false" title="C&#xf3;digo Coluna" type="java.lang.String"/>
                             <Column editable="false" title="Coluna" type="java.lang.String"/>
@@ -149,6 +150,11 @@
                         <Property name="autoResizeMode" type="int" value="0"/>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
+                            <Column maxWidth="20" minWidth="20" prefWidth="20" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
                             <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                               <Title/>
                               <Editor/>

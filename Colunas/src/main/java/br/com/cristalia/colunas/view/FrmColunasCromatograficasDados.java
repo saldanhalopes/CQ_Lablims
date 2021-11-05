@@ -31,6 +31,7 @@ import java.util.TreeMap;
 public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
 
     private ColunaUtil colunaUtil;
+    private ColunaVaga colunaVaga;
     private boolean novoColuna = false;
     private final TreeMap<Long, String> categoryMapSetor = new TreeMap<>();
     private final TreeMap<Long, String> categoryMapColuna = new TreeMap<>();
@@ -50,6 +51,7 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         initComponents();
         initFrame();
         novoColuna = true;
+        ckbEstoque.setSelected(true);
     }
 
     public FrmColunasCromatograficasDados(java.awt.Frame parent, boolean modal, ColunaUtil colUtil) {
@@ -89,7 +91,6 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         jLabel35 = new javax.swing.JLabel();
         txtVaga = new javax.swing.JTextField();
         btnVagaColuna = new javax.swing.JButton();
-        cmbAnalise = new javax.swing.JComboBox();
         cmbSetor = new javax.swing.JComboBox();
         btnProcurarMetodo = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
@@ -102,6 +103,8 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         jLabel38 = new javax.swing.JLabel();
         txtArquivo = new javax.swing.JTextField();
         btnAnexar = new javax.swing.JButton();
+        ckbEstoque = new javax.swing.JCheckBox();
+        cmbAnalise = new javax.swing.JComboBox();
         btnSalvarMetodo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -168,6 +171,13 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
             }
         });
 
+        ckbEstoque.setText("Estoque");
+        ckbEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbEstoqueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -187,6 +197,8 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
                             .addComponent(txtVaga))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVagaColuna, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckbEstoque)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -196,16 +208,16 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
                             .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbAnalise, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtMetodologia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnProcurarMetodo))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDataAtivacao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDataVerificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 491, Short.MAX_VALUE))))
+                                .addGap(0, 491, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtMetodologia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnProcurarMetodo))
+                            .addComponent(cmbAnalise, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -239,8 +251,8 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
                     .addComponent(txtMetodologia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbAnalise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31))
+                    .addComponent(jLabel31)
+                    .addComponent(cmbAnalise, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
@@ -254,7 +266,8 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtVaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnVagaColuna)))
+                        .addComponent(btnVagaColuna)
+                        .addComponent(ckbEstoque)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDataAtivacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -334,7 +347,7 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
             } else if (cmbSetor.getSelectedItem().toString().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Setor inválido");
                 cmbSetor.requestFocus();
-            } else if (txtVaga.getText().isEmpty()) {
+            } else if (txtVaga.getText().isEmpty() && !ckbEstoque.isSelected()) {
                 JOptionPane.showMessageDialog(null, "Vaga inválida");
                 cmbAnalise.requestFocus();
             } else if (novoColuna) {
@@ -393,6 +406,38 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnProcurarColunaActionPerformed
 
+    private void btnVagaColunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVagaColunaActionPerformed
+        ColunaVaga vaga = new ColunaVaga();
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        FrmProcurarVaga frm = new FrmProcurarVaga(null, true, vaga);
+        frm.setVisible(true);
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        try {
+            vaga = new ColunaVagaDAO().findById(ColunaVaga.class, vaga.getId());
+            String name = vaga.getColunaStorage().getSetor().getSiglaSetor()
+                    + " - " + vaga.getColunaStorage().getTipo()
+                    + ": " + vaga.getColunaStorage().getNumero()
+                    + " -  Vaga: " + vaga.getVaga();
+            txtVaga.setText(name);
+            categoryMapVaga.clear();
+            categoryMapVaga.put(vaga.getId(), name);
+            ckbEstoque.setSelected(false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);
+        }
+    }//GEN-LAST:event_btnVagaColunaActionPerformed
+
+    private void btnAnexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnexarActionPerformed
+        try {
+            certificado = Pdf.carregar();
+            if (certificado != null) {
+                txtArquivo.setText(certificado.getName());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao anexar dados: " + ex);
+        }
+    }//GEN-LAST:event_btnAnexarActionPerformed
+
     private void btnProcurarMetodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarMetodoActionPerformed
         try {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -411,36 +456,12 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnProcurarMetodoActionPerformed
 
-    private void btnVagaColunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVagaColunaActionPerformed
-        ColunaVaga vaga = new ColunaVaga();
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        FrmProcurarVaga frm = new FrmProcurarVaga(null, true, vaga);
-        frm.setVisible(true);
-        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        try {
-            vaga = new ColunaVagaDAO().findById(ColunaVaga.class, vaga.getId());
-            String name = vaga.getColunaStorage().getSetor().getSiglaSetor()
-                    + " - " + vaga.getColunaStorage().getTipo()
-                    + ": " + vaga.getColunaStorage().getNumero()
-                    + " -  Vaga: " + vaga.getVaga();
-            txtVaga.setText(name);
+    private void ckbEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbEstoqueActionPerformed
+        if (ckbEstoque.isSelected()) {
+            txtVaga.setText("");
             categoryMapVaga.clear();
-            categoryMapVaga.put(vaga.getId(), name);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);
         }
-    }//GEN-LAST:event_btnVagaColunaActionPerformed
-
-    private void btnAnexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnexarActionPerformed
-        try {
-            certificado = Pdf.carregar();
-            if (certificado != null) {
-                txtArquivo.setText(certificado.getName());
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao anexar dados: " + ex);
-        }
-    }//GEN-LAST:event_btnAnexarActionPerformed
+    }//GEN-LAST:event_ckbEstoqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -461,8 +482,6 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmColunasCromatograficasDados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -489,6 +508,7 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
     private javax.swing.JButton btnProcurarMetodo;
     public static javax.swing.JButton btnSalvarMetodo;
     private javax.swing.JButton btnVagaColuna;
+    private javax.swing.JCheckBox ckbEstoque;
     private javax.swing.JComboBox cmbAnalise;
     private javax.swing.JComboBox cmbSetor;
     private javax.swing.JLabel jLabel24;
@@ -519,10 +539,10 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         SetorDAO setorDAO = new SetorDAO();
         try {
             for (Setor setor : setorDAO.findEntities(Setor.class)) {
-                    Long id = setor.getId();
-                    String name = setor.getSiglaSetor();
-                    cmbSetor.addItem(name);
-                    categoryMapSetor.put(id, name);
+                Long id = setor.getId();
+                String name = setor.getSiglaSetor();
+                cmbSetor.addItem(name);
+                categoryMapSetor.put(id, name);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
@@ -556,7 +576,13 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
             colUtil.setMetodologia(new MetodologiaDAO().findById(Metodologia.class, ComboBox.getKeyForValue(txtMetodologia.getText(), categoryMapMetodo)));
             colUtil.setAnalise(new AnaliseDAO().findById(Analise.class, ComboBox.getKeyForValue(cmbAnalise.getSelectedItem().toString(), categoryMapAnalise)));
             colUtil.setSetor(new SetorDAO().findById(Setor.class, ComboBox.getKeyForValue(cmbSetor.getSelectedItem().toString(), categoryMapSetor)));
-            colUtil.setVaga(colVaga);
+            if (ckbEstoque.isSelected()) {
+                colUtil.setVaga(null);
+                colUtil.setEstoque(true);
+            } else {
+                colUtil.setVaga(colVaga);
+                colUtil.setEstoque(false);
+            }
             colUtil.setDataAtivacao(txtDataAtivacao.getDate());
             colUtil.setDataVerificacao(txtDataVerificacao.getDate());
             colUtil.setObs(txtObsColuna.getText());
@@ -582,8 +608,6 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         ColunaUtilDAO colUtilDAO = new ColunaUtilDAO();
         ColunaVagaDAO colVagaDAO = new ColunaVagaDAO();
         try {
-            ColunaVaga colVaga = colVagaDAO.findById(ColunaVaga.class, ComboBox.getKeyForValue(txtVaga.getText(), categoryMapVaga));
-            colunaUtil.setVaga(colVaga);
             colunaUtil.setColuna(new ColunaDAO().findById(Coluna.class, ComboBox.getKeyForValue(txtColuna.getText(), categoryMapColuna)));
             colunaUtil.setMetodologia(new MetodologiaDAO().findById(Metodologia.class, ComboBox.getKeyForValue(txtMetodologia.getText(), categoryMapMetodo)));
             colunaUtil.setAnalise(new AnaliseDAO().findById(Analise.class, ComboBox.getKeyForValue(cmbAnalise.getSelectedItem().toString(), categoryMapAnalise)));
@@ -595,10 +619,23 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
             if (certificado != null) {
                 colunaUtil.setCertificado(Pdf.salvar(certificado, "Certificado de Coluna"));
             }
+            if (ckbEstoque.isSelected()) {
+                colunaUtil.setVaga(null);
+                colunaUtil.setEstoque(true);
+                try {
+                    colunaVaga.setColunaUtil(null);
+                    colVagaDAO.salvar(colunaVaga);
+                } catch (Exception e) {
+                }
+            } else {
+                ColunaVaga colVaga = colVagaDAO.findById(ColunaVaga.class, ComboBox.getKeyForValue(txtVaga.getText(), categoryMapVaga));
+                colunaUtil.setVaga(colVaga);
+                colunaUtil.setEstoque(false);
+                colVaga.setColunaUtil(colunaUtil);
+                colVagaDAO.salvar(colVaga);
+            }
             colunaUtil.setVersion(colunaUtil.getVersion() + 1);
             colUtilDAO.salvar(colunaUtil);
-            colVaga.setColunaUtil(colunaUtil);
-            colVagaDAO.salvar(colVaga);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao gravar dados: " + e);
         }
@@ -621,14 +658,22 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
             txtMetodologia.setText(nameMtd);
             categoryMapMetodo.clear();
             categoryMapMetodo.put(mtd.getId(), nameMtd);
-            ColunaVaga vaga = new ColunaVagaDAO().findById(ColunaVaga.class, colunaUtil.getVaga().getId());
-            String nameVaga = vaga.getColunaStorage().getSetor().getSiglaSetor()
-                    + " - " + vaga.getColunaStorage().getTipo()
-                    + ": " + vaga.getColunaStorage().getNumero()
-                    + " -  Vaga: " + vaga.getVaga();
-            txtVaga.setText(nameVaga);
-            categoryMapVaga.clear();
-            categoryMapVaga.put(vaga.getId(), nameVaga);
+            ckbEstoque.setSelected(colunaUtil.getEstoque());
+            if (colunaUtil.getEstoque()) {
+                ckbEstoque.setSelected(true);
+                txtVaga.setText("");
+            }
+            try {
+                colunaVaga = new ColunaVagaDAO().findById(ColunaVaga.class, colunaUtil.getVaga().getId());
+                String nameVaga = colunaVaga.getColunaStorage().getSetor().getSiglaSetor()
+                        + " - " + colunaVaga.getColunaStorage().getTipo()
+                        + ": " + colunaVaga.getColunaStorage().getNumero()
+                        + " -  Vaga: " + colunaVaga.getVaga();
+                txtVaga.setText(nameVaga);
+                categoryMapVaga.clear();
+                categoryMapVaga.put(colunaVaga.getId(), nameVaga);
+            } catch (Exception e) {
+            }
             try {
                 Arquivos arquivo = new ArquivosDAO().findById(Arquivos.class, colunaUtil.getCertificado().getId());
                 if (arquivo != null) {

@@ -19,6 +19,7 @@ package br.com.cristalia.colunas.view;
 import br.com.cristalia.biblioteca.enumeration.ColunaStatus;
 import br.com.cristalia.biblioteca.util.AcessoSistema;
 import br.com.cristalia.biblioteca.util.DataHora;
+import br.com.cristalia.biblioteca.util.DateCellRenderer;
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.Pdf;
 import br.com.cristalia.biblioteca.util.Reports;
@@ -116,14 +117,14 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Col_Id", "Código Coluna", "Coluna", "Localização", "Certificado", "Método", "n° Sistema", "Part Number", "Serial Number", "Setor", "Ativação", "Obs", "Version"
+                "", "Col_Id", "Código Coluna", "Coluna", "Localização", "Certificado", "Método", "n° Sistema", "Part Number", "Serial Number", "Setor", "Ativação", "Obs", "Version"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -149,39 +150,42 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblColuna);
         if (tblColuna.getColumnModel().getColumnCount() > 0) {
-            tblColuna.getColumnModel().getColumn(0).setMinWidth(50);
-            tblColuna.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tblColuna.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblColuna.getColumnModel().getColumn(1).setMinWidth(140);
-            tblColuna.getColumnModel().getColumn(1).setPreferredWidth(140);
-            tblColuna.getColumnModel().getColumn(1).setMaxWidth(140);
-            tblColuna.getColumnModel().getColumn(2).setMinWidth(300);
-            tblColuna.getColumnModel().getColumn(2).setPreferredWidth(500);
-            tblColuna.getColumnModel().getColumn(3).setMinWidth(200);
-            tblColuna.getColumnModel().getColumn(3).setPreferredWidth(400);
-            tblColuna.getColumnModel().getColumn(4).setMinWidth(80);
-            tblColuna.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tblColuna.getColumnModel().getColumn(4).setMaxWidth(80);
-            tblColuna.getColumnModel().getColumn(5).setMinWidth(120);
-            tblColuna.getColumnModel().getColumn(5).setPreferredWidth(120);
-            tblColuna.getColumnModel().getColumn(5).setMaxWidth(120);
-            tblColuna.getColumnModel().getColumn(6).setMinWidth(80);
-            tblColuna.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tblColuna.getColumnModel().getColumn(6).setMaxWidth(80);
-            tblColuna.getColumnModel().getColumn(7).setMinWidth(120);
-            tblColuna.getColumnModel().getColumn(7).setPreferredWidth(120);
-            tblColuna.getColumnModel().getColumn(8).setMinWidth(150);
-            tblColuna.getColumnModel().getColumn(8).setPreferredWidth(150);
-            tblColuna.getColumnModel().getColumn(9).setMinWidth(120);
-            tblColuna.getColumnModel().getColumn(9).setPreferredWidth(120);
-            tblColuna.getColumnModel().getColumn(9).setMaxWidth(120);
-            tblColuna.getColumnModel().getColumn(10).setMinWidth(140);
-            tblColuna.getColumnModel().getColumn(10).setPreferredWidth(140);
-            tblColuna.getColumnModel().getColumn(11).setMinWidth(300);
-            tblColuna.getColumnModel().getColumn(11).setPreferredWidth(300);
-            tblColuna.getColumnModel().getColumn(12).setMinWidth(80);
-            tblColuna.getColumnModel().getColumn(12).setPreferredWidth(80);
-            tblColuna.getColumnModel().getColumn(12).setMaxWidth(80);
+            tblColuna.getColumnModel().getColumn(0).setMinWidth(20);
+            tblColuna.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblColuna.getColumnModel().getColumn(0).setMaxWidth(20);
+            tblColuna.getColumnModel().getColumn(1).setMinWidth(50);
+            tblColuna.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tblColuna.getColumnModel().getColumn(1).setMaxWidth(50);
+            tblColuna.getColumnModel().getColumn(2).setMinWidth(140);
+            tblColuna.getColumnModel().getColumn(2).setPreferredWidth(140);
+            tblColuna.getColumnModel().getColumn(2).setMaxWidth(140);
+            tblColuna.getColumnModel().getColumn(3).setMinWidth(300);
+            tblColuna.getColumnModel().getColumn(3).setPreferredWidth(500);
+            tblColuna.getColumnModel().getColumn(4).setMinWidth(200);
+            tblColuna.getColumnModel().getColumn(4).setPreferredWidth(400);
+            tblColuna.getColumnModel().getColumn(5).setMinWidth(80);
+            tblColuna.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tblColuna.getColumnModel().getColumn(5).setMaxWidth(80);
+            tblColuna.getColumnModel().getColumn(6).setMinWidth(120);
+            tblColuna.getColumnModel().getColumn(6).setPreferredWidth(120);
+            tblColuna.getColumnModel().getColumn(6).setMaxWidth(120);
+            tblColuna.getColumnModel().getColumn(7).setMinWidth(80);
+            tblColuna.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblColuna.getColumnModel().getColumn(7).setMaxWidth(80);
+            tblColuna.getColumnModel().getColumn(8).setMinWidth(120);
+            tblColuna.getColumnModel().getColumn(8).setPreferredWidth(120);
+            tblColuna.getColumnModel().getColumn(9).setMinWidth(150);
+            tblColuna.getColumnModel().getColumn(9).setPreferredWidth(150);
+            tblColuna.getColumnModel().getColumn(10).setMinWidth(120);
+            tblColuna.getColumnModel().getColumn(10).setPreferredWidth(120);
+            tblColuna.getColumnModel().getColumn(10).setMaxWidth(120);
+            tblColuna.getColumnModel().getColumn(11).setMinWidth(140);
+            tblColuna.getColumnModel().getColumn(11).setPreferredWidth(140);
+            tblColuna.getColumnModel().getColumn(12).setMinWidth(300);
+            tblColuna.getColumnModel().getColumn(12).setPreferredWidth(300);
+            tblColuna.getColumnModel().getColumn(13).setMinWidth(80);
+            tblColuna.getColumnModel().getColumn(13).setPreferredWidth(80);
+            tblColuna.getColumnModel().getColumn(13).setMaxWidth(80);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -595,7 +599,7 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
         if (tblColuna.getSelectedRow() != -1) {
             HashMap map = new HashMap();
             try {
-                map.put("id_coluna", (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                map.put("id_coluna", (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                 Reports.imprimir("EtiquetaColuna.jasper", map);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);
@@ -631,7 +635,7 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
         if (tblColuna.getSelectedRow() != -1) {
             try {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                ColunaUtil colUtil = new ColunaUtilDAO().findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                ColunaUtil colUtil = new ColunaUtilDAO().findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                 if (colUtil.getCertificado() != null) {
                     Pdf.view(colUtil.getCertificado().getId());
                 } else {
@@ -650,11 +654,11 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
         if (tblColuna.getSelectedRow() != -1) {
             try {
-                new FrmColunaHistorico(this, true, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0)).setVisible(true);
+                new FrmColunaHistorico(this, true, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1)).setVisible(true);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione a Coluna!");
         }
     }//GEN-LAST:event_btnLogActionPerformed
@@ -733,9 +737,13 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblColuna.getModel();
         ColunaUtilDAO colUtilDAO = new ColunaUtilDAO();
         model.setNumRows(0);
+        DateCellRenderer r = new DateCellRenderer();
+        tblColuna.setDefaultRenderer(Object.class, r);
         try {
             for (ColunaUtil colUtil : colUtilDAO.findListColunaUtil(null, cmbColunaStatus.getSelectedItem().toString())) {
                 model.addRow(new Object[]{
+                    colUtil.getEstoque() ? "Verde"
+                    : (colUtil.getDataDescarte() != null ? "Vermelho" : ""),
                     colUtil.getId(),
                     colUtil.getSetor().getDepartamento().getSiglaDepartamento()
                     + "-" + colUtil.getColuna().getTipoColuna().getConfiguracao()
@@ -747,12 +755,14 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
                     + colUtil.getColuna().getTamanhoColuna().getConfiguracao() + "mm x "
                     + colUtil.getColuna().getDiametroColuna().getConfiguracao() + "mm x "
                     + colUtil.getColuna().getParticulaColuna().getConfiguracao() + "µm ",
-                    colUtil.getDataDescarte() == null
-                    ? colUtil.getVaga().getColunaStorage().getSetor().getSetor()
+                    colUtil.getDataDescarte() != null
+                    ? "Inativa"
+                    : (colUtil.getEstoque() == true
+                    ? "Estoque"
+                    : colUtil.getVaga().getColunaStorage().getSetor().getSetor()
                     + " - " + colUtil.getVaga().getColunaStorage().getTipo()
                     + " - " + colUtil.getVaga().getColunaStorage().getNumero()
-                    + "  Vaga: " + colUtil.getVaga().getVaga()
-                    : "Inativa",
+                    + "  Vaga: " + colUtil.getVaga().getVaga()),
                     colUtil.getCertificado() != null,
                     colUtil.getMetodologia().getCodMetodo(),
                     colUtil.getColuna().getCodigo(),
@@ -794,7 +804,7 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
             ColunaUtilDAO colUtilDAO = new ColunaUtilDAO();
             try {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                 new FrmColunasCromatograficasDados(null, true, colUtil).setVisible(true);
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             } catch (Exception e) {
@@ -814,7 +824,7 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
                         "Realmente deseja Excluir essa coluna?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0) {
                     if (senha.Salvar()) {
-                        ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                        ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                         colUtilDAO.remover(ColunaUtil.class, colUtil.getId());
                     }
                 }
@@ -837,16 +847,19 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
                         "Realmente deseja Descartar essa coluna?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0) {
                     if (senha.Salvar()) {
-                        ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                        ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                         colUtil.setDataDescarte(new Date());
-                        Long vaga = colUtil.getVaga().getId();
-                        colUtil.setVaga(null);
-                        colUtil.setVersion(colUtil.getVersion() + 1);
-                        colUtilDAO.salvar(colUtil);
-                        if (vaga != null) {
-                            colVaga = colVagaDAO.findById(ColunaVaga.class, vaga);
-                            colVaga.setColunaUtil(null);
-                            colVagaDAO.salvar(colVaga);
+                        if (colUtil.getVaga() != null) {
+                            Long vaga = colUtil.getVaga().getId();
+                            colUtil.setVaga(null);
+                            colUtil.setEstoque(false);
+                            colUtil.setVersion(colUtil.getVersion() + 1);
+                            colUtilDAO.salvar(colUtil);
+                            if (vaga != null) {
+                                colVaga = colVagaDAO.findById(ColunaVaga.class, vaga);
+                                colVaga.setColunaUtil(null);
+                                colVagaDAO.salvar(colVaga);
+                            }
                         }
                     }
                 }
@@ -865,7 +878,7 @@ public class FrmColunasCromatograficas extends javax.swing.JFrame {
             Senha senha = new Senha();
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             try {
-                ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+                ColunaUtil colUtil = colUtilDAO.findById(ColunaUtil.class, (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 1));
                 if (colUtil.getDataDescarte() != null) {
                     int dialogResult = JOptionPane.showConfirmDialog(null,
                             "Realmente deseja Reativar essa coluna?", "Aviso", JOptionPane.YES_NO_OPTION);

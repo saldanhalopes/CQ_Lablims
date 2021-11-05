@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rafael.lopes
  */
-public class FrmColunaHistorico extends javax.swing.JDialog {
+public final class FrmColunaHistorico extends javax.swing.JDialog {
 
     final String zeros = "0000";
     private Long col_id = null;

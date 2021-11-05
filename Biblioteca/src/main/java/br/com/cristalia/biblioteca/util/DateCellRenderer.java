@@ -22,6 +22,8 @@ public class DateCellRenderer extends DefaultTableCellRenderer {
             tableCellRendererComponent.setBackground(Color.RED);
         } else if ("Azul".equals(value)) {
             tableCellRendererComponent.setBackground(Color.BLUE);
+        } else if ("Verde".equals(value)) {
+            tableCellRendererComponent.setBackground(Color.GREEN);
         } else {
             tableCellRendererComponent.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
         }

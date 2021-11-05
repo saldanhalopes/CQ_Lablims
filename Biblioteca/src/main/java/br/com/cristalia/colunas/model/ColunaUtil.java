@@ -115,6 +115,9 @@ public class ColunaUtil implements EntidadeBase, Serializable {
     @Column(name = "obs")
     private String obs;
 
+    @Column(name = "estoque")
+    private Boolean estoque;
+
     @Column(name = "version")
     private Integer version;
 
@@ -160,6 +163,9 @@ public class ColunaUtil implements EntidadeBase, Serializable {
 
     @Transient
     private Boolean Obs_MOD;
+    
+    @Transient
+    private Boolean Estoque_MOD;
 
     @Transient
     private Boolean Certificado_MOD;
@@ -390,6 +396,22 @@ public class ColunaUtil implements EntidadeBase, Serializable {
 
     public void setAnexos(Set<Arquivos> anexos) {
         this.anexos = anexos;
+    }
+
+    public Boolean getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Boolean estoque) {
+        this.estoque = estoque;
+    }
+
+    public Boolean getEstoque_MOD() {
+        return Estoque_MOD;
+    }
+
+    public void setEstoque_MOD(Boolean Estoque_MOD) {
+        this.Estoque_MOD = Estoque_MOD;
     }
 
     @Override

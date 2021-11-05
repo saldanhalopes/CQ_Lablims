@@ -16,6 +16,7 @@ tb_coluna_util.data_ativacao,
 tb_coluna_util.data_descarte,
 tb_coluna_util.data_verificacao,
 tb_coluna_util.serial_number,
+tb_coluna_util.estoque,
 tb_coluna_util.obs,
 tb_coluna.codigo,
 tb_coluna.part_number,
@@ -36,36 +37,35 @@ tb_analise.analise,
 tb_metodologia.cod_metodo,
 tb_metodologia.versao as versao_mtd
 FROM tb_coluna_util
-INNER JOIN tb_coluna
+LEFT JOIN tb_coluna
 ON tb_coluna.id = tb_coluna_util.coluna_id
-INNER JOIN tb_analise
+LEFT JOIN tb_analise
 ON tb_analise.id = tb_coluna_util.analise_id
-INNER JOIN tb_metodologia
+LEFT JOIN tb_metodologia
 ON tb_metodologia.id = tb_coluna_util.metodologia_id
-INNER JOIN tb_coluna_vaga
+LEFT JOIN tb_coluna_vaga
 ON tb_coluna_vaga.id = tb_coluna_util.vaga_id
-INNER JOIN tb_coluna_storage
+LEFT JOIN tb_coluna_storage
 ON tb_coluna_storage.id = tb_coluna_vaga.coluna_storage_id
-INNER JOIN tb_setor
+LEFT JOIN tb_setor
 ON tb_setor.id = tb_coluna_storage.setor_id
-INNER JOIN tb_departamento
+LEFT JOIN tb_departamento
 ON tb_departamento.id = tb_setor.departamento_id
-INNER JOIN tb_coluna_config diametro
+LEFT JOIN tb_coluna_config diametro
 ON diametro.id = tb_coluna.diametro_coluna
-INNER JOIN tb_coluna_config fabricante
+LEFT JOIN tb_coluna_config fabricante
 ON fabricante.id = tb_coluna.fabricante_coluna
-INNER JOIN tb_coluna_config fase
+LEFT JOIN tb_coluna_config fase
 ON fase.id = tb_coluna.fase_coluna
-INNER JOIN tb_coluna_config marca
+LEFT JOIN tb_coluna_config marca
 ON marca.id = tb_coluna.marca_coluna
-INNER JOIN tb_coluna_config particula
+LEFT JOIN tb_coluna_config particula
 ON particula.id = tb_coluna.particula_coluna
-INNER JOIN tb_coluna_config tamanho
+LEFT JOIN tb_coluna_config tamanho
 ON tamanho.id = tb_coluna.tamanho_coluna
-INNER JOIN tb_coluna_config tipo
+LEFT JOIN tb_coluna_config tipo
 ON tipo.id = tb_coluna.tipo_coluna
-WHERE 1 = 1 $P!{where}
-]]>
+WHERE 1 = 1 $P!{where}]]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -95,6 +95,11 @@ WHERE 1 = 1 $P!{where}
 	<field name="serial_number" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="serial_number"/>
 		<property name="com.jaspersoft.studio.field.label" value="serial_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_coluna_util"/>
+	</field>
+	<field name="estoque" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="estoque"/>
+		<property name="com.jaspersoft.studio.field.label" value="estoque"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tb_coluna_util"/>
 	</field>
 	<field name="obs" class="java.lang.String">
@@ -220,7 +225,7 @@ WHERE 1 = 1 $P!{where}
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[N° SAP]]></text>
+					<text><![CDATA[Código]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="657" y="19" width="145" height="20" forecolor="#000000" backcolor="#E6E6E6" uuid="23961e77-1237-41aa-a07f-0f70ee7abd98"/>
@@ -465,7 +470,7 @@ $F{particula_coluna} + "um "]]></textFieldExpression>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codigo_sap}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

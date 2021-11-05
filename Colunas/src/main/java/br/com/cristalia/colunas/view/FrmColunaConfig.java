@@ -241,7 +241,7 @@ public class FrmColunaConfig extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        tpnColunaConfig.addTab("Reagentes", pnlColunaConfig);
+        tpnColunaConfig.addTab("Colunas", pnlColunaConfig);
 
         pnlAuditTrail.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

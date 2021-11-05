@@ -79,10 +79,15 @@ public class ColunaUtilDAO extends GenenicoDAO<ColunaUtil> {
             if (conditional != null) {
                 switch (conditional) {
                     case "Ativos":
-                        cq.where(cb.isNull(root.get("dataDescarte")));
+                        cq.where(cb.isNull(root.get("dataDescarte")),
+                               cb.equal(root.get("estoque"), false));
                         break;
                     case "Inativos":
-                        cq.where(cb.isNotNull(root.get("dataDescarte")));
+                        cq.where(cb.isNotNull(root.get("dataDescarte")),
+                               cb.equal(root.get("estoque"), false));
+                        break;
+                    case "Estoque":
+                        cq.where(cb.equal(root.get("estoque"), true));
                         break;
                 }
             }
@@ -127,7 +132,7 @@ public class ColunaUtilDAO extends GenenicoDAO<ColunaUtil> {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<ColunaUtil> root = cq.from(ColunaUtil.class);
-            root.fetch("anexos", JoinType.INNER);
+            root.fetch("certificado", JoinType.INNER);
             cq.where(cb.equal(root.get("id"), col_id));
             cq.select(root);
             TypedQuery<ColunaUtil> q = em.createQuery(cq);

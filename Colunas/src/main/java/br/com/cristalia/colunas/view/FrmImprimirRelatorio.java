@@ -200,6 +200,7 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
     private void carregarStorage() {
         cmbStorage.removeAllItems();
         cmbStorage.addItem("Todos");
+        cmbStorage.addItem("Estoque");
         categoryMapStorage.clear();
         ColunaStorageDAO colStorageDAO = new ColunaStorageDAO();
         try {
@@ -241,10 +242,15 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
         HashMap map = new HashMap();
         String where = "";
         if (!cmbSetor.getSelectedItem().toString().equals("Todos")) {
-            where = " AND tb_setor.id = " + ComboBox.getKeyForValue(cmbSetor.getSelectedItem().toString(), categoryMapSetor).toString();
+            where = " AND tb_setor.id = " + ComboBox.getKeyForValue(cmbSetor.getSelectedItem().toString(), categoryMapSetor).toString()
+                    + " AND tb_coluna_util.estoque = 'false'";
         }
         if (!cmbStorage.getSelectedItem().toString().equals("Todos")) {
-            where = " AND tb_coluna_storage.id = " + ComboBox.getKeyForValue(cmbStorage.getSelectedItem().toString(), categoryMapStorage).toString();
+            where = " AND tb_coluna_storage.id = " + ComboBox.getKeyForValue(cmbStorage.getSelectedItem().toString(), categoryMapStorage).toString()
+                    + " AND tb_coluna_util.estoque = 'false'";
+        }
+        if (cmbStorage.getSelectedItem().toString().equals("Estoque")) {
+            where = " AND tb_coluna_util.estoque = 'true'";
         }
         map.put("where", where);
         Reports.imprimir("Colunas.jasper", map);
