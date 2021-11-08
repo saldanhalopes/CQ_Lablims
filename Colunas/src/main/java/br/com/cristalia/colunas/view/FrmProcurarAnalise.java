@@ -16,49 +16,51 @@
  */
 package br.com.cristalia.colunas.view;
 
+import br.com.cristalia.biblioteca.dao.AnaliseDAO;
+import br.com.cristalia.biblioteca.model.Analise;
+import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.TableSorter;
-import br.com.cristalia.biblioteca.dao.ColunaVagaDAO;
-import br.com.cristalia.biblioteca.model.ColunaVaga;
-import java.util.List;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author rafael.lopes
  */
-public class FrmProcurarVaga extends javax.swing.JDialog {
+public class FrmProcurarAnalise extends javax.swing.JDialog {
 
-    private Boolean todos = false;
-    private ColunaVaga colunaVaga;
-    final String zeros = "0000";
+    private Analise analise;
 
     /**
      * Creates new form FrmProcurarProduto
      *
      * @param parent
      * @param modal
-     * @param prd
+     * @param anls
      */
-    public FrmProcurarVaga(java.awt.Frame parent, boolean modal) {
+    public FrmProcurarAnalise(java.awt.Frame parent, boolean modal, Analise anls) {
         super(parent, modal);
-        init();
-        todos = true;
-        btnSelecionar.setVisible(false);
-        read();
-    }
-
-    public FrmProcurarVaga(java.awt.Frame parent, boolean modal, ColunaVaga colVaga) {
-        super(parent, modal);
-        init();
-        colunaVaga = colVaga;
-        read();
-    }
-
-    private void init() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Vagas");
+        setTitle("Procurar Metodologia");
+        setIconImage(new Frames().getIcon());
         setResizable(false);
+        analise = anls;
+        readProduto();
+    }
+
+    public FrmProcurarAnalise(java.awt.Frame parent, boolean modal, 
+            Analise anls, HashSet<Analise> ids) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Procurar Metodologia");
+        setIconImage(new Frames().getIcon());
+        setResizable(false);
+        analise = anls;
+        readProduto(ids);
     }
 
     /**
@@ -76,7 +78,7 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
         btnFechar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblVaga = new javax.swing.JTable();
+        tblAnalise = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -102,15 +104,15 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
             }
         });
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Vagas"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Análises"));
 
-        tblVaga.setAutoCreateRowSorter(true);
-        tblVaga.setModel(new javax.swing.table.DefaultTableModel(
+        tblAnalise.setAutoCreateRowSorter(true);
+        tblAnalise.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Vaga_ID", "Storage / Vaga", "Ocupação", "Obs", "Version"
+                "Analise_Id", "Sigla", "Análise", "Descrição", "Versão"
             }
         ) {
             Class[] types = new Class [] {
@@ -128,32 +130,35 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tblVaga.setSurrendersFocusOnKeystroke(true);
-        tblVaga.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblVaga);
-        if (tblVaga.getColumnModel().getColumnCount() > 0) {
-            tblVaga.getColumnModel().getColumn(0).setMinWidth(80);
-            tblVaga.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tblVaga.getColumnModel().getColumn(0).setMaxWidth(80);
-            tblVaga.getColumnModel().getColumn(1).setMinWidth(150);
-            tblVaga.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tblVaga.getColumnModel().getColumn(2).setMinWidth(120);
-            tblVaga.getColumnModel().getColumn(2).setPreferredWidth(120);
-            tblVaga.getColumnModel().getColumn(2).setMaxWidth(120);
-            tblVaga.getColumnModel().getColumn(4).setMinWidth(80);
-            tblVaga.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tblVaga.getColumnModel().getColumn(4).setMaxWidth(80);
+        tblAnalise.setSurrendersFocusOnKeystroke(true);
+        tblAnalise.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAnaliseMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAnalise);
+        if (tblAnalise.getColumnModel().getColumnCount() > 0) {
+            tblAnalise.getColumnModel().getColumn(0).setMinWidth(80);
+            tblAnalise.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tblAnalise.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblAnalise.getColumnModel().getColumn(1).setMinWidth(80);
+            tblAnalise.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblAnalise.getColumnModel().getColumn(1).setMaxWidth(80);
+            tblAnalise.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tblAnalise.getColumnModel().getColumn(4).setMinWidth(80);
+            tblAnalise.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblAnalise.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +174,7 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPesquisar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 674, Short.MAX_VALUE)
                         .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -182,7 +187,7 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -195,18 +200,24 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
-        TableSorter.TableSorter(tblVaga, txtPesquisar);
+        TableSorter.TableSorter(tblAnalise, txtPesquisar);
     }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        if (tblVaga.getSelectedRow() != -1) {
-            carregar();
+        if (tblAnalise.getSelectedRow() != -1) {
+            selecionar();
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void tblAnaliseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnaliseMouseClicked
+        if (evt.getClickCount() == 2) {
+            selecionar();
+        }
+    }//GEN-LAST:event_tblAnaliseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -225,13 +236,13 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmProcurarVaga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmProcurarAnalise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmProcurarVaga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmProcurarAnalise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmProcurarVaga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmProcurarAnalise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmProcurarVaga.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmProcurarAnalise.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -239,7 +250,7 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FrmProcurarVaga dialog = new FrmProcurarVaga(new javax.swing.JFrame(), true, null);
+                FrmProcurarAnalise dialog = new FrmProcurarAnalise(new javax.swing.JFrame(), true, null, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -257,44 +268,51 @@ public class FrmProcurarVaga extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblVaga;
+    private javax.swing.JTable tblAnalise;
     private javax.swing.JTextField txtPesquisar;
     // End of variables declaration//GEN-END:variables
 
-    private void read() {
-        DefaultTableModel model = (DefaultTableModel) tblVaga.getModel();
-        ColunaVagaDAO colVagaDAO = new ColunaVagaDAO();
+    private void readProduto() {
+        DefaultTableModel model = (DefaultTableModel) tblAnalise.getModel();
         model.setNumRows(0);
         try {
-            List<Object[]> list = null;
-            if (todos) {
-                list = colVagaDAO.findAllVaga();
-            } else {
-                list = colVagaDAO.findAllVagaLivre();
-            }
-            for (Object[] objects : list) {
+            for (Analise anls : new AnaliseDAO().findEntities(Analise.class)) {
                 model.addRow(new Object[]{
-                    objects[0], // vaga.id
-                    objects[6] // setor.setor
-                    + " - " + objects[4] // storage.tipo
-                    + ": " + objects[5] // storage.numero
-                    + " -  Vaga: " + objects[1], // vaga.vaga
-                    objects[8] == null ? " - "
-                    : objects[7] // departamento.sigla_departamento
-                    + "-" + objects[9] // coluna_config.TipoColuna
-                    + "-" + zeros.substring(String.valueOf(objects[8]).length())// coluna_util.codigo_coluna
-                    + String.valueOf((Integer) objects[8]),
-                    objects[2],// vaga.obs
-                    objects[3]// vaga.version
+                    anls.getId(),
+                    anls.getSiglaAnalise(),
+                    anls.getAnalise(),
+                    anls.getDescricaoAnalise(),
+                    anls.getVersion()
                 });
             }
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmProcurarAnalise.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void readProduto(HashSet<Analise> ids) {
+        DefaultTableModel model = (DefaultTableModel) tblAnalise.getModel();
+        model.setNumRows(0);
+        try {
+            for (Analise anls : ids) {
+                model.addRow(new Object[]{
+                    anls.getId(),
+                    anls.getSiglaAnalise(),
+                    anls.getAnalise(),
+                    anls.getDescricaoAnalise(),
+                    anls.getVersion()
+                });
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmProcurarAnalise.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void carregar() {
-        colunaVaga.setId(Long.parseLong(tblVaga.getValueAt(tblVaga.getSelectedRow(), 0).toString()));
+    private void selecionar() {
+        analise.setId((Long) tblAnalise.getValueAt(tblAnalise.getSelectedRow(), 0));
+        analise.setSiglaAnalise(tblAnalise.getValueAt(tblAnalise.getSelectedRow(), 1).toString());
+        analise.setAnalise(tblAnalise.getValueAt(tblAnalise.getSelectedRow(), 2).toString());
+        analise.setDescricaoAnalise(tblAnalise.getValueAt(tblAnalise.getSelectedRow(), 3).toString());
         dispose();
     }
 

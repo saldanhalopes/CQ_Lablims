@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.dao;
+package br.com.cristalia.biblioteca.dao;
 
 import br.com.cristalia.biblioteca.connection.ConnectionFactory;
-import br.com.cristalia.biblioteca.dao.GenenicoDAO;
-import br.com.cristalia.colunas.model.ColunaLog;
+import br.com.cristalia.biblioteca.model.ColunaLog;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -32,8 +31,8 @@ public class ColunaLogDAO extends GenenicoDAO<ColunaLog> {
     public List<ColunaLog> findByColuna(Long id) {
         EntityManager em = ConnectionFactory.em();
         try {
-            Query myQuery = em.createQuery("SELECT colLog FROM ColunaLog colLog I"
-                    + "NNER JOIN colLog.colunaUtil colUtil "
+            Query myQuery = em.createQuery("SELECT colLog FROM ColunaLog colLog "
+                    + "INNER JOIN colLog.colunaUtil colUtil "
                     + "WHERE colUtil.id = :colUtil_id "
                     + "ORDER BY colLog.id ASC")
                     .setParameter("colUtil_id", id);

@@ -14,11 +14,12 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.model;
+package br.com.cristalia.biblioteca.model;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;
 import br.com.cristalia.biblioteca.interfaces.EntidadeBase;
+import br.com.cristalia.biblioteca.model.Setor;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -27,8 +28,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicInsert;
@@ -36,60 +37,59 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
-/**
- * O <code>Usuario</code> classe Coluna Config
+ /**
+ * O <code>Usuario</code> classe Usuario
  *
  * @author rafae.lopes
  * @version 1.00
  */
 @Entity
-@Table(name = "tb_coluna_config")
-@NamedQueries({
-    @NamedQuery(name = "ColunaConfig.findAll", query = "SELECT conf FROM ColunaConfig conf"),
-    @NamedQuery(name = "ColunaConfig.checkIsExits", query = "SELECT conf FROM ColunaConfig conf WHERE conf.tipo = :tipo AND conf.configuracao = :valor"),
-    @NamedQuery(name = "ColunaConfig.findColunaConfigByTipo", query = "SELECT conf FROM ColunaConfig conf WHERE conf.tipo = :tipo ORDER BY conf.configuracao ASC")})
+@Table(name = "tb_coluna_storage")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @Audited(withModifiedFlag = true)
-@AuditTable(value = "tba_coluna_config_auditoria")
+@AuditTable(value = "tba_coluna_storage_auditoria")
 @EntityListeners(AuditListener.class)
-public class ColunaConfig implements EntidadeBase, Serializable {
+public class ColunaStorage implements EntidadeBase, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column(name = "tipo")
     private String tipo;
     
-    @Column(name = "configuracao")
-    private String configuracao;
+    @Column(name = "numero")
+    private Integer numero;
     
-    @Column(name = "descricao")
-    private String descricao;
+    @ManyToOne()
+    @JoinColumn(name = "setor_id", referencedColumnName = "id")
+    private Setor setor;
+    
+    @Column(name = "obs")
+    private String obs;
 
     @Column(name = "version")
     private Integer version;
 
     @Transient
     private Audit audit = new Audit();
-
+    
     @Transient
     private Boolean Tipo_MOD;
     
     @Transient
-    private Boolean Configuracao_MOD;
+    private Boolean Numero_MOD;
     
     @Transient
-    private Boolean Descricao_MOD;
+    private Boolean Setor_MOD;
     
-    public ColunaConfig() {
-    }
-
-    public ColunaConfig(String tipo) {
-        this.tipo = tipo;
+    @Transient
+    private Boolean Obs_MOD;
+    
+    public ColunaStorage() {
     }
 
     @Override
@@ -101,28 +101,20 @@ public class ColunaConfig implements EntidadeBase, Serializable {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getObs() {
+        return obs;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
-    public String getConfiguracao() {
-        return configuracao;
+    public Setor getSetor() {
+        return setor;
     }
 
-    public void setConfiguracao(String configuracao) {
-        this.configuracao = configuracao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setSetor(Setor setor) {
+        this.setor = setor;
     }
 
     public Integer getVersion() {
@@ -141,6 +133,30 @@ public class ColunaConfig implements EntidadeBase, Serializable {
         this.audit = audit;
     }
 
+    public Boolean getSetor_MOD() {
+        return Setor_MOD;
+    }
+
+    public void setSetor_MOD(Boolean Setor_MOD) {
+        this.Setor_MOD = Setor_MOD;
+    }
+
+    public Boolean getObs_MOD() {
+        return Obs_MOD;
+    }
+
+    public void setObs_MOD(Boolean Obs_MOD) {
+        this.Obs_MOD = Obs_MOD;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public Boolean getTipo_MOD() {
         return Tipo_MOD;
     }
@@ -149,28 +165,26 @@ public class ColunaConfig implements EntidadeBase, Serializable {
         this.Tipo_MOD = Tipo_MOD;
     }
 
-    public Boolean getConfiguracao_MOD() {
-        return Configuracao_MOD;
+    public Integer getNumero() {
+        return numero;
     }
 
-    public void setConfiguracao_MOD(Boolean Configuracao_MOD) {
-        this.Configuracao_MOD = Configuracao_MOD;
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
-    public Boolean getDescricao_MOD() {
-        return Descricao_MOD;
+    public Boolean getNumero_MOD() {
+        return Numero_MOD;
     }
 
-    public void setDescricao_MOD(Boolean Descricao_MOD) {
-        this.Descricao_MOD = Descricao_MOD;
+    public void setNumero_MOD(Boolean Numero_MOD) {
+        this.Numero_MOD = Numero_MOD;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -182,9 +196,8 @@ public class ColunaConfig implements EntidadeBase, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ColunaConfig other = (ColunaConfig) obj;
+        final ColunaStorage other = (ColunaStorage) obj;
         return Objects.equals(this.id, other.id);
     }
 
-    
 }

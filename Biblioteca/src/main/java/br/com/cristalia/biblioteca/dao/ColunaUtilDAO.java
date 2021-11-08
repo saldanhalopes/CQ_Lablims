@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.dao;
+package br.com.cristalia.biblioteca.dao;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.connection.ConnectionFactory;
 import br.com.cristalia.biblioteca.dao.GenenicoDAO;
 import br.com.cristalia.biblioteca.model.Analise;
 import br.com.cristalia.biblioteca.model.Arquivos;
-import br.com.cristalia.colunas.model.Coluna;
-import br.com.cristalia.colunas.model.ColunaConfig;
-import br.com.cristalia.colunas.model.ColunaUtil;
-import br.com.cristalia.colunas.model.ColunaVaga;
+import br.com.cristalia.biblioteca.model.Coluna;
+import br.com.cristalia.biblioteca.model.ColunaConfig;
+import br.com.cristalia.biblioteca.model.ColunaUtil;
+import br.com.cristalia.biblioteca.model.ColunaVaga;
 import br.com.cristalia.biblioteca.model.Metodologia;
 import br.com.cristalia.biblioteca.model.Setor;
 import java.sql.Connection;

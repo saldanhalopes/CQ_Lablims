@@ -1,37 +1,41 @@
 package br.com.cristalia.colunas.view;
 
-import br.com.cristalia.biblioteca.dao.SetorDAO;
-import br.com.cristalia.biblioteca.model.Setor;
-import br.com.cristalia.biblioteca.util.ComboBox;
+import br.com.cristalia.biblioteca.dao.ColunaLogDAO;
 import br.com.cristalia.biblioteca.util.Frames;
-import br.com.cristalia.biblioteca.util.Reports;
-import br.com.cristalia.biblioteca.dao.ColunaStorageDAO;
-import br.com.cristalia.biblioteca.model.ColunaStorage;
-import java.util.TreeMap;
-import java.util.HashMap;
-import java.util.List;
+import br.com.cristalia.biblioteca.util.Senha;
+import br.com.cristalia.biblioteca.dao.UsuarioDAO;
+import br.com.cristalia.biblioteca.model.ColunaLog;
+import br.com.cristalia.biblioteca.model.Usuario;
+import java.awt.Cursor;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
  * @author rafael.lopes
  */
-public class FrmImprimirRelatorio extends javax.swing.JDialog {
+public class FrmColunaFinalizarHistorico extends javax.swing.JDialog {
 
-    private final TreeMap<Long, String> categoryMapStorage = new TreeMap<>();
-    private final TreeMap<Long, String> categoryMapSetor = new TreeMap<>();
+    private ColunaLog colunaLog;
 
     /**
      * Creates new form FrmConfigAcesso
      *
      * @param parent
      * @param modal
+     * @param colLog
      */
-    public FrmImprimirRelatorio(java.awt.Frame parent, boolean modal) {
+    public FrmColunaFinalizarHistorico(java.awt.Frame parent, boolean modal, ColunaLog colLog) {
         super(parent, modal);
         initComponents();
-        Frames.setUpFrame(this, "Imprimir Relatório", false);
-        carregarSetor();
-        carregarStorage();
+        init();
+        colunaLog = colLog;
+        carregarDados();
+    }
+
+    private void init() {
+        Frames.setUpFrame(this, "Vaga", true);
+        txtInjecoes.setModel(new SpinnerNumberModel(1, 1, 9000, 1));
     }
 
     /**
@@ -46,14 +50,14 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
         btnSalvarUsuario = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        cmbStorage = new javax.swing.JComboBox();
-        jLabel29 = new javax.swing.JLabel();
-        cmbSetor = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
+        txtInjecoes = new javax.swing.JSpinner();
+        jLabel43 = new javax.swing.JLabel();
+        txtDataFim = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnSalvarUsuario.setText("Imprimir");
+        btnSalvarUsuario.setText("Ok");
         btnSalvarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarUsuarioActionPerformed(evt);
@@ -67,17 +71,11 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
             }
         });
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecionar"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Finalizar Histórico"));
 
-        jLabel28.setText("Storage:");
+        jLabel7.setText("n° de Injeções:");
 
-        jLabel29.setText("Setor:");
-
-        cmbSetor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSetorActionPerformed(evt);
-            }
-        });
+        jLabel43.setText("Data Fim:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -85,26 +83,26 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbStorage, 0, 290, Short.MAX_VALUE)
-                    .addComponent(cmbSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtInjecoes, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDataFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(cmbSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(cmbStorage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addComponent(txtInjecoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -127,8 +125,8 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSalvarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -139,17 +137,12 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
-        print();
-        dispose();
+        salvar();
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
+        fechar();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void cmbSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSetorActionPerformed
-        carregarStorage();
-    }//GEN-LAST:event_cmbSetorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,14 +161,14 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmImprimirRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmColunaFinalizarHistorico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FrmImprimirRelatorio dialog = new FrmImprimirRelatorio(new javax.swing.JFrame(), true);
+                FrmColunaFinalizarHistorico dialog = new FrmColunaFinalizarHistorico(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -190,70 +183,54 @@ public class FrmImprimirRelatorio extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     public static javax.swing.JButton btnSalvarUsuario;
-    private javax.swing.JComboBox cmbSetor;
-    private javax.swing.JComboBox cmbStorage;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel7;
+    public static com.toedter.calendar.JDateChooser txtDataFim;
+    private javax.swing.JSpinner txtInjecoes;
     // End of variables declaration//GEN-END:variables
 
-    private void carregarStorage() {
-        cmbStorage.removeAllItems();
-        cmbStorage.addItem("Todos");
-        cmbStorage.addItem("Estoque");
-        categoryMapStorage.clear();
-        ColunaStorageDAO colStorageDAO = new ColunaStorageDAO();
+    private void salvar() {
+        Senha senha = new Senha();
         try {
-            List<ColunaStorage> list;
-            if (cmbSetor.getSelectedItem().toString().equals("Todos")) {
-                list = colStorageDAO.findAll();
-            } else {
-                list = colStorageDAO.findAll(ComboBox.getKeyForValue(cmbSetor.getSelectedItem().toString(), categoryMapSetor));
+            if (txtDataFim.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Data Final Inválida");
+                txtDataFim.requestFocus();
+            } else if (senha.Salvar()) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                atulizar();
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                dispose();
             }
-            for (ColunaStorage colStorage : list) {
-                Long id = colStorage.getId();
-                String name = colStorage.getSetor().getSiglaSetor()
-                        + " - " + colStorage.getTipo()
-                        + " - " + colStorage.getNumero();
-                cmbStorage.addItem(name);
-                categoryMapStorage.put(id, name);
-            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar dados: " + e);
+        }
+    }
+
+    private void atulizar() {
+        try {
+            ColunaLogDAO colLogDAO = new ColunaLogDAO();
+            colunaLog.setDataFim(txtDataFim.getDate());
+            colunaLog.setInjecoes((Integer) txtInjecoes.getValue());
+            colunaLog.setUsuarioFim(new UsuarioDAO().findById(Usuario.class,
+                    Long.valueOf(System.getProperty("user_id"))));
+            colunaLog.setVersion(colunaLog.getVersion() + 1);
+            colLogDAO.salvar(colunaLog);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao criar dados: " + ex);
+        }
+    }
+
+    private void carregarDados() {
+        try {
+            txtDataFim.setDate(colunaLog.getDataFim());
+            txtInjecoes.setValue(colunaLog.getInjecoes());
         } catch (Exception e) {
         }
     }
 
-    private void carregarSetor() {
-        cmbSetor.removeAllItems();
-        cmbSetor.addItem("Todos");
-        categoryMapSetor.clear();
-        SetorDAO setorDAO = new SetorDAO();
-        try {
-            for (Setor setor : setorDAO.findEntities(Setor.class)) {
-                Long id = setor.getId();
-                String name = setor.getSiglaSetor();
-                cmbSetor.addItem(name);
-                categoryMapSetor.put(id, name);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    private void print() {
-        HashMap map = new HashMap();
-        String where = "";
-        if (!cmbSetor.getSelectedItem().toString().equals("Todos")) {
-            where = " AND tb_setor.id = " + ComboBox.getKeyForValue(cmbSetor.getSelectedItem().toString(), categoryMapSetor).toString()
-                    + " AND tb_coluna_util.estoque = 'false'";
-        }
-        if (!cmbStorage.getSelectedItem().toString().equals("Todos")) {
-            where = " AND tb_coluna_storage.id = " + ComboBox.getKeyForValue(cmbStorage.getSelectedItem().toString(), categoryMapStorage).toString()
-                    + " AND tb_coluna_util.estoque = 'false'";
-        }
-        if (cmbStorage.getSelectedItem().toString().equals("Estoque")) {
-            where = " AND tb_coluna_util.estoque = 'true'";
-        }
-        map.put("where", where);
-        Reports.imprimir("Colunas.jasper", map);
+    private void fechar() {
+        Frames.fecharFrame(this);
     }
 
 }

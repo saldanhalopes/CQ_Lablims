@@ -14,12 +14,11 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.model;
+package br.com.cristalia.biblioteca.model;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;
 import br.com.cristalia.biblioteca.interfaces.EntidadeBase;
-import br.com.cristalia.biblioteca.model.Setor;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -44,13 +43,13 @@ import org.hibernate.envers.Audited;
  * @version 1.00
  */
 @Entity
-@Table(name = "tb_coluna_storage")
+@Table(name = "tb_coluna_vaga")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @Audited(withModifiedFlag = true)
-@AuditTable(value = "tba_coluna_storage_auditoria")
+@AuditTable(value = "tba_coluna_vaga_auditoria")
 @EntityListeners(AuditListener.class)
-public class ColunaStorage implements EntidadeBase, Serializable {
+public class ColunaVaga implements EntidadeBase, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,15 +57,16 @@ public class ColunaStorage implements EntidadeBase, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "tipo")
-    private String tipo;
-    
-    @Column(name = "numero")
-    private Integer numero;
+    @Column(name = "vaga")
+    private Integer vaga;
     
     @ManyToOne()
-    @JoinColumn(name = "setor_id", referencedColumnName = "id")
-    private Setor setor;
+    @JoinColumn(name = "coluna_storage_id", referencedColumnName = "id")
+    private ColunaStorage colunaStorage;
+    
+    @ManyToOne()
+    @JoinColumn(name = "coluna_util_id", referencedColumnName = "id")
+    private ColunaUtil colunaUtil;
     
     @Column(name = "obs")
     private String obs;
@@ -76,20 +76,24 @@ public class ColunaStorage implements EntidadeBase, Serializable {
 
     @Transient
     private Audit audit = new Audit();
+
+    @Transient
+    private Boolean Vaga_MOD;
+
+    @Transient
+    private Boolean ColunaStorage_MOD;
     
     @Transient
-    private Boolean Tipo_MOD;
-    
-    @Transient
-    private Boolean Numero_MOD;
-    
-    @Transient
-    private Boolean Setor_MOD;
+    private Boolean ColunaUtil_MOD;
     
     @Transient
     private Boolean Obs_MOD;
     
-    public ColunaStorage() {
+    public ColunaVaga() {
+    }
+
+    public ColunaVaga(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -101,20 +105,28 @@ public class ColunaStorage implements EntidadeBase, Serializable {
         this.id = id;
     }
 
+    public Integer getVaga() {
+        return vaga;
+    }
+
+    public void setVaga(Integer vaga) {
+        this.vaga = vaga;
+    }
+
+    public ColunaStorage getColunaStorage() {
+        return colunaStorage;
+    }
+
+    public void setColunaStorage(ColunaStorage colunaStorage) {
+        this.colunaStorage = colunaStorage;
+    }
+
     public String getObs() {
         return obs;
     }
 
     public void setObs(String obs) {
         this.obs = obs;
-    }
-
-    public Setor getSetor() {
-        return setor;
-    }
-
-    public void setSetor(Setor setor) {
-        this.setor = setor;
     }
 
     public Integer getVersion() {
@@ -133,12 +145,12 @@ public class ColunaStorage implements EntidadeBase, Serializable {
         this.audit = audit;
     }
 
-    public Boolean getSetor_MOD() {
-        return Setor_MOD;
+    public Boolean getVaga_MOD() {
+        return Vaga_MOD;
     }
 
-    public void setSetor_MOD(Boolean Setor_MOD) {
-        this.Setor_MOD = Setor_MOD;
+    public void setVaga_MOD(Boolean Vaga_MOD) {
+        this.Vaga_MOD = Vaga_MOD;
     }
 
     public Boolean getObs_MOD() {
@@ -149,36 +161,28 @@ public class ColunaStorage implements EntidadeBase, Serializable {
         this.Obs_MOD = Obs_MOD;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Boolean getColunaStorage_MOD() {
+        return ColunaStorage_MOD;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setColunaStorage_MOD(Boolean ColunaStorage_MOD) {
+        this.ColunaStorage_MOD = ColunaStorage_MOD;
     }
 
-    public Boolean getTipo_MOD() {
-        return Tipo_MOD;
+    public ColunaUtil getColunaUtil() {
+        return colunaUtil;
     }
 
-    public void setTipo_MOD(Boolean Tipo_MOD) {
-        this.Tipo_MOD = Tipo_MOD;
+    public void setColunaUtil(ColunaUtil colunaUtil) {
+        this.colunaUtil = colunaUtil;
     }
 
-    public Integer getNumero() {
-        return numero;
+    public Boolean getColunaUtil_MOD() {
+        return ColunaUtil_MOD;
     }
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public Boolean getNumero_MOD() {
-        return Numero_MOD;
-    }
-
-    public void setNumero_MOD(Boolean Numero_MOD) {
-        this.Numero_MOD = Numero_MOD;
+    public void setColunaUtil_MOD(Boolean ColunaUtil_MOD) {
+        this.ColunaUtil_MOD = ColunaUtil_MOD;
     }
 
     @Override
@@ -196,7 +200,7 @@ public class ColunaStorage implements EntidadeBase, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ColunaStorage other = (ColunaStorage) obj;
+        final ColunaVaga other = (ColunaVaga) obj;
         return Objects.equals(this.id, other.id);
     }
 

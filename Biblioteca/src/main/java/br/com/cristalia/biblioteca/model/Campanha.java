@@ -20,7 +20,6 @@ import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;
 import br.com.cristalia.biblioteca.interfaces.EntidadeBase;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -75,20 +74,20 @@ public class Campanha implements EntidadeBase, Serializable {
     @JoinColumn(name = "setor_id", referencedColumnName = "id")
     private Setor setor;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,
+    @ManyToMany(cascade = {CascadeType.PERSIST, 
         CascadeType.MERGE})
-    @JoinTable(name = "tb_campanha_metodologia",
+    @JoinTable(name = "tb_campanha_metodologia", 
             joinColumns = @JoinColumn(name = "campanha_id"),
             inverseJoinColumns = @JoinColumn(name = "metodologia_id"))
     private Set<Metodologia> metodologia = new HashSet<>();
-    
+
     @ManyToMany(cascade = {CascadeType.PERSIST,
         CascadeType.MERGE})
     @JoinTable(name = "tb_campanha_analise",
             joinColumns = @JoinColumn(name = "campanha_id"),
             inverseJoinColumns = @JoinColumn(name = "analise_id"))
     private Set<Analise> analise = new HashSet<>();
-    
+
     @ManyToOne()
     @JoinColumn(name = "equipamento_id", referencedColumnName = "id")
     private Equipamento equipamento;
@@ -116,16 +115,20 @@ public class Campanha implements EntidadeBase, Serializable {
     @Column(name = "obs")
     private String obs;
 
-    @Column(name = "version")
-    private Integer version;
-
-    @Transient
-    private Audit audit = new Audit();
-
+    @Column(name = "ordem")
     private int ordem;
 
+    @Column(name = "cor")
     private String cor;
-    private Timestamp previsao;
+
+    @Column(name = "previsao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date previsao;
+
+    @Column(name = "version")
+    private Integer version;
+    @Transient
+    private Audit audit = new Audit();
 
     @Override
     public Long getId() {
@@ -256,11 +259,11 @@ public class Campanha implements EntidadeBase, Serializable {
         this.cor = cor;
     }
 
-    public Timestamp getPrevisao() {
+    public Date getPrevisao() {
         return previsao;
     }
 
-    public void setPrevisao(Timestamp previsao) {
+    public void setPrevisao(Date previsao) {
         this.previsao = previsao;
     }
 

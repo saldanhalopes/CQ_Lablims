@@ -13,12 +13,12 @@ import br.com.cristalia.biblioteca.util.FieldFormatLimit;
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.Pdf;
 import br.com.cristalia.biblioteca.util.Senha;
-import br.com.cristalia.colunas.dao.ColunaDAO;
-import br.com.cristalia.colunas.dao.ColunaUtilDAO;
-import br.com.cristalia.colunas.dao.ColunaVagaDAO;
-import br.com.cristalia.colunas.model.Coluna;
-import br.com.cristalia.colunas.model.ColunaUtil;
-import br.com.cristalia.colunas.model.ColunaVaga;
+import br.com.cristalia.biblioteca.dao.ColunaDAO;
+import br.com.cristalia.biblioteca.dao.ColunaUtilDAO;
+import br.com.cristalia.biblioteca.dao.ColunaVagaDAO;
+import br.com.cristalia.biblioteca.model.Coluna;
+import br.com.cristalia.biblioteca.model.ColunaUtil;
+import br.com.cristalia.biblioteca.model.ColunaVaga;
 import javax.swing.JOptionPane;
 import java.awt.Cursor;
 import java.io.File;
@@ -60,7 +60,6 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         initFrame();
         colunaUtil = colUtil;
         carregarDados();
-        carregarHistorico();
     }
 
     private void initFrame() {
@@ -694,7 +693,4 @@ public class FrmColunasCromatograficasDados extends javax.swing.JDialog {
         }
     }
 
-    private void carregarHistorico() {
-
-    }
 }

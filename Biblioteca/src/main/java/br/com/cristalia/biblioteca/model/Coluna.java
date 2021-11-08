@@ -14,7 +14,7 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.model;
+package br.com.cristalia.biblioteca.model;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;

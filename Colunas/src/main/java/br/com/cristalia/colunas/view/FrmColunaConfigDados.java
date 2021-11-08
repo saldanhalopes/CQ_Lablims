@@ -2,8 +2,8 @@ package br.com.cristalia.colunas.view;
 
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.Senha;
-import br.com.cristalia.colunas.dao.ColunaConfigDAO;
-import br.com.cristalia.colunas.model.ColunaConfig;
+import br.com.cristalia.biblioteca.dao.ColunaConfigDAO;
+import br.com.cristalia.biblioteca.model.ColunaConfig;
 import javax.swing.JOptionPane;
 import java.awt.Cursor;
 

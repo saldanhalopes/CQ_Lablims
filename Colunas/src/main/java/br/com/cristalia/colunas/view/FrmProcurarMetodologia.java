@@ -38,7 +38,7 @@ public class FrmProcurarMetodologia extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
-     * @param prd
+     * @param metodo
      */
     public FrmProcurarMetodologia(java.awt.Frame parent, boolean modal, Metodologia metodo) {
         super(parent, modal);

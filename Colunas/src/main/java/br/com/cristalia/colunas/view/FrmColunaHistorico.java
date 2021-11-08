@@ -6,10 +6,10 @@ import br.com.cristalia.biblioteca.util.DataHora;
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.Pdf;
 import br.com.cristalia.biblioteca.util.Senha;
-import br.com.cristalia.colunas.dao.ColunaLogDAO;
-import br.com.cristalia.colunas.dao.ColunaUtilDAO;
-import br.com.cristalia.colunas.model.ColunaLog;
-import br.com.cristalia.colunas.model.ColunaUtil;
+import br.com.cristalia.biblioteca.dao.ColunaLogDAO;
+import br.com.cristalia.biblioteca.dao.ColunaUtilDAO;
+import br.com.cristalia.biblioteca.model.ColunaLog;
+import br.com.cristalia.biblioteca.model.ColunaUtil;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -32,6 +32,7 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
+     * @param id
      */
     public FrmColunaHistorico(java.awt.Frame parent, boolean modal, Long id) {
         super(parent, modal);
@@ -82,13 +83,16 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         pnlHistorico = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblHistoricoColuna = new javax.swing.JTable();
-        btnAdicionarCampanha = new javax.swing.JButton();
+        btnAdicionarHistorico = new javax.swing.JButton();
+        btnAbrirAnexoHistorico = new javax.swing.JButton();
+        btnRemoverHistorico = new javax.swing.JButton();
+        btnFinalizarHistorico = new javax.swing.JButton();
         pnlAnexos = new javax.swing.JPanel();
-        btnAdicionar = new javax.swing.JButton();
-        btnRemover = new javax.swing.JButton();
+        btnAdicionarAnexo = new javax.swing.JButton();
+        btnRemoverAnexo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAnexos = new javax.swing.JTable();
-        btnRemover1 = new javax.swing.JButton();
+        btnAbrirAnexo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -271,14 +275,14 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Campanha", "Equipamento", "Usuário / Início", "Usuário / Fim", "n° Injeções"
+                "Col_Log_Id", "Campanha", "Setor", "Equipamento", "Usuário / Início", "Usuário / Fim", "n° Injeções", "Anexo", "Obs"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -289,13 +293,58 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblHistoricoColuna.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblHistoricoColuna.getTableHeader().setReorderingAllowed(false);
+        tblHistoricoColuna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHistoricoColunaMouseClicked(evt);
+            }
+        });
+        tblHistoricoColuna.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblHistoricoColunaKeyReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblHistoricoColuna);
+        if (tblHistoricoColuna.getColumnModel().getColumnCount() > 0) {
+            tblHistoricoColuna.getColumnModel().getColumn(0).setMinWidth(80);
+            tblHistoricoColuna.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tblHistoricoColuna.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblHistoricoColuna.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tblHistoricoColuna.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tblHistoricoColuna.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblHistoricoColuna.getColumnModel().getColumn(4).setPreferredWidth(200);
+            tblHistoricoColuna.getColumnModel().getColumn(5).setPreferredWidth(200);
+            tblHistoricoColuna.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tblHistoricoColuna.getColumnModel().getColumn(7).setPreferredWidth(50);
+            tblHistoricoColuna.getColumnModel().getColumn(8).setPreferredWidth(300);
+        }
 
-        btnAdicionarCampanha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_plus_24.png"))); // NOI18N
-        btnAdicionarCampanha.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionarHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_plus_24.png"))); // NOI18N
+        btnAdicionarHistorico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarCampanhaActionPerformed(evt);
+                btnAdicionarHistoricoActionPerformed(evt);
+            }
+        });
+
+        btnAbrirAnexoHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_view_32.png"))); // NOI18N
+        btnAbrirAnexoHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirAnexoHistoricoActionPerformed(evt);
+            }
+        });
+
+        btnRemoverHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_minus_24.png"))); // NOI18N
+        btnRemoverHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverHistoricoActionPerformed(evt);
+            }
+        });
+
+        btnFinalizarHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_flag_finish_32.png"))); // NOI18N
+        btnFinalizarHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarHistoricoActionPerformed(evt);
             }
         });
 
@@ -307,7 +356,12 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdicionarCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnAdicionarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAbrirAnexoHistorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRemoverHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFinalizarHistorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnlHistoricoLayout.setVerticalGroup(
@@ -315,26 +369,32 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
             .addGroup(pnlHistoricoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlHistoricoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                     .addGroup(pnlHistoricoLayout.createSequentialGroup()
-                        .addComponent(btnAdicionarCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                        .addComponent(btnAbrirAnexoHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAdicionarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRemoverHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFinalizarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         pnlDados.addTab("Histórico", pnlHistorico);
 
-        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_plus_24.png"))); // NOI18N
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionarAnexo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_plus_24.png"))); // NOI18N
+        btnAdicionarAnexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
+                btnAdicionarAnexoActionPerformed(evt);
             }
         });
 
-        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_minus_24.png"))); // NOI18N
-        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+        btnRemoverAnexo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_minus_24.png"))); // NOI18N
+        btnRemoverAnexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoverActionPerformed(evt);
+                btnRemoverAnexoActionPerformed(evt);
             }
         });
 
@@ -376,10 +436,10 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblAnexos);
 
-        btnRemover1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_view_32.png"))); // NOI18N
-        btnRemover1.addActionListener(new java.awt.event.ActionListener() {
+        btnAbrirAnexo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_view_32.png"))); // NOI18N
+        btnAbrirAnexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemover1ActionPerformed(evt);
+                btnAbrirAnexoActionPerformed(evt);
             }
         });
 
@@ -393,9 +453,9 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlAnexosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAnexosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnRemover1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRemover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnAbrirAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRemoverAnexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdicionarAnexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnlAnexosLayout.setVerticalGroup(
@@ -405,11 +465,11 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
                 .addGroup(pnlAnexosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                     .addGroup(pnlAnexosLayout.createSequentialGroup()
-                        .addComponent(btnRemover1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAbrirAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdicionarAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRemoverAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -454,18 +514,26 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+    private void btnAdicionarAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarAnexoActionPerformed
         addAnexo();
-    }//GEN-LAST:event_btnAdicionarActionPerformed
+    }//GEN-LAST:event_btnAdicionarAnexoActionPerformed
 
-    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+    private void btnRemoverAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverAnexoActionPerformed
         if (tblAnexos.getSelectedRow() != -1) {
             removerAnexo();
         }
-    }//GEN-LAST:event_btnRemoverActionPerformed
+    }//GEN-LAST:event_btnRemoverAnexoActionPerformed
 
     private void tblAnexosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnexosMouseClicked
-
+        if (tblAnexos.getSelectedRow() != -1) {
+            try {
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                Pdf.view((Long) tblAnexos.getValueAt(tblAnexos.getSelectedRow(), 0), this);
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
+            }
+        }
     }//GEN-LAST:event_tblAnexosMouseClicked
 
     private void tblAnexosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblAnexosKeyReleased
@@ -476,7 +544,7 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tblAnexosKeyReleased
 
-    private void btnRemover1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemover1ActionPerformed
+    private void btnAbrirAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirAnexoActionPerformed
         if (tblAnexos.getSelectedRow() != -1) {
             try {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -486,11 +554,70 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
             }
         }
-    }//GEN-LAST:event_btnRemover1ActionPerformed
+    }//GEN-LAST:event_btnAbrirAnexoActionPerformed
 
-    private void btnAdicionarCampanhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarCampanhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAdicionarCampanhaActionPerformed
+    private void btnAdicionarHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarHistoricoActionPerformed
+        try {
+            ColunaUtilDAO colUtilDAO = new ColunaUtilDAO();
+            FrmColunaHistoricoDados frm = new FrmColunaHistoricoDados(null, true,
+                    colUtilDAO.findById(ColunaUtil.class, col_id), true);
+            frm.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
+        } finally {
+            readHistorico();
+        }
+    }//GEN-LAST:event_btnAdicionarHistoricoActionPerformed
+
+    private void tblHistoricoColunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHistoricoColunaMouseClicked
+        if (evt.getClickCount() == 2) {
+            editar();
+        }
+    }//GEN-LAST:event_tblHistoricoColunaMouseClicked
+
+    private void btnAbrirAnexoHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirAnexoHistoricoActionPerformed
+        if (tblHistoricoColuna.getSelectedRow() != -1) {
+            try {
+                if ((boolean) tblHistoricoColuna.getValueAt(tblHistoricoColuna.getSelectedRow(), 7)) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    ColunaLogDAO colLogDAO = new ColunaLogDAO();
+                    Pdf.view(colLogDAO.findById(ColunaLog.class, (Long) tblHistoricoColuna.getValueAt(tblHistoricoColuna.getSelectedRow(), 0)).getAnexo().getId(), this);
+                    setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Esse registros não contém Anexo!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
+            }
+        }
+    }//GEN-LAST:event_btnAbrirAnexoHistoricoActionPerformed
+
+    private void btnRemoverHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverHistoricoActionPerformed
+        if (tblHistoricoColuna.getSelectedRow() != -1) {
+            removerHistorico();
+        }
+    }//GEN-LAST:event_btnRemoverHistoricoActionPerformed
+
+    private void tblHistoricoColunaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblHistoricoColunaKeyReleased
+        if (tblHistoricoColuna.getSelectedRow() != -1) {
+            if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+                removerHistorico();
+            }
+        }
+    }//GEN-LAST:event_tblHistoricoColunaKeyReleased
+
+    private void btnFinalizarHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarHistoricoActionPerformed
+        try {
+            ColunaLogDAO colLogDAO = new ColunaLogDAO();
+            new FrmColunaFinalizarHistorico(null, true, colLogDAO.findById(ColunaLog.class,
+                    (Long) tblHistoricoColuna.getValueAt(tblHistoricoColuna.getSelectedRow(), 0)))
+                    .setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
+        } finally {
+            readHistorico();
+        }
+    }//GEN-LAST:event_btnFinalizarHistoricoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,11 +656,14 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnAdicionarCampanha;
+    private javax.swing.JButton btnAbrirAnexo;
+    private javax.swing.JButton btnAbrirAnexoHistorico;
+    private javax.swing.JButton btnAdicionarAnexo;
+    private javax.swing.JButton btnAdicionarHistorico;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton btnRemover;
-    private javax.swing.JButton btnRemover1;
+    private javax.swing.JButton btnFinalizarHistorico;
+    private javax.swing.JButton btnRemoverAnexo;
+    private javax.swing.JButton btnRemoverHistorico;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -600,10 +730,26 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         }
     }
 
+    private void editar() {
+        //if (AcessoSistema.editarDados(ACESSO)) {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        try {
+            ColunaLogDAO colLogDAO = new ColunaLogDAO();
+            FrmColunaHistoricoDados frm = new FrmColunaHistoricoDados(null, true,
+                    colLogDAO.findById(ColunaLog.class,
+                            (Long) tblHistoricoColuna.getValueAt(tblHistoricoColuna.getSelectedRow(), 0)));
+            frm.setVisible(true);
+            readHistorico();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao abrir os dados: " + ex);
+        }
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        //}
+    }
+
     private void addAnexo() {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Senha senha = new Senha();
-
         try {
             ColunaUtilDAO colUtilDAO = new ColunaUtilDAO();
             ColunaUtil colUtil = new ColunaUtilDAO().findById(ColunaUtil.class, col_id);
@@ -619,7 +765,6 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro ao adicionar Anexo: " + ex);
         } finally {
             readAnexos();
-
         }
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
@@ -645,6 +790,29 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
+    private void removerHistorico() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        //if (AcessoSistema.deletarDados(ACESSO)) {
+        ColunaLogDAO colLogDAO = new ColunaLogDAO();
+        Senha senha = new Senha();
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Realmente deseja Excluir esse registro?", "Aviso", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == 0) {
+                if (senha.Salvar()) {
+                    ColunaLog colLog = colLogDAO.findById(ColunaLog.class,
+                            (Long) tblHistoricoColuna.getValueAt(tblHistoricoColuna.getSelectedRow(), 0));
+                    colLogDAO.remover(ColunaLog.class, colLog.getId());
+                    new ArquivosDAO().remover(Arquivos.class, colLog.getAnexo().getId());
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excuir o dado: " + e.getMessage(), "Erro ao Excluir", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            readHistorico();
+        }
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }
+
     public void readHistorico() {
         DefaultTableModel model = (DefaultTableModel) tblHistoricoColuna.getModel();
         ColunaLogDAO colLogDAO = new ColunaLogDAO();
@@ -652,10 +820,15 @@ public final class FrmColunaHistorico extends javax.swing.JDialog {
         try {
             for (ColunaLog colLog : colLogDAO.findByColuna(col_id)) {
                 model.addRow(new Object[]{
+                    colLog.getId(),
                     colLog.getCampanha().getCampanha(),
-                    colLog.getCromatografo().getTag(),
-                    colLog.getUsuarioInicio().getUsuario() + " / " + DataHora.getStringDateTime(colLog.getCampanha().getDataInicio()),
-                    colLog.getUsuarioFim().getUsuario() + " / " + DataHora.getStringDateTime(colLog.getCampanha().getDataFim())
+                    colLog.getCampanha().getSetor().getSetor(),
+                    colLog.getCampanha().getEquipamento().getTag(),
+                    colLog.getUsuarioInicio().getUsuario() + " - " + DataHora.getStringDateTime(colLog.getCampanha().getDataInicio()),
+                    colLog.getUsuarioFim() == null ? "" : colLog.getUsuarioFim().getUsuario() + " - " + DataHora.getStringDateTime(colLog.getCampanha().getDataFim()),
+                    colLog.getInjecoes(),
+                    colLog.getAnexo() != null,
+                    colLog.getObs()
                 });
             }
         } catch (Exception e) {

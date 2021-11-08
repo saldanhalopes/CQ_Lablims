@@ -14,15 +14,11 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.model;
+package br.com.cristalia.biblioteca.model;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;
 import br.com.cristalia.biblioteca.interfaces.EntidadeBase;
-import br.com.cristalia.biblioteca.model.Analise;
-import br.com.cristalia.biblioteca.model.Arquivos;
-import br.com.cristalia.biblioteca.model.Metodologia;
-import br.com.cristalia.biblioteca.model.Setor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;

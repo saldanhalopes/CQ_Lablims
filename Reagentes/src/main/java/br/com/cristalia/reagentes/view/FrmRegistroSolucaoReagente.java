@@ -14,16 +14,15 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.view;
+package br.com.cristalia.reagentes.view;
 
-
+import br.com.cristalia.biblioteca.dao.RegistroSolucaoReagenteDAO;
+import br.com.cristalia.biblioteca.model.RegistroSolucaoReagente;
 import br.com.cristalia.biblioteca.util.AcessoSistema;
 import br.com.cristalia.biblioteca.util.DataHora;
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.Senha;
 import br.com.cristalia.biblioteca.util.TableSorter;
-import br.com.cristalia.biblioteca.dao.ColunaDAO;
-import br.com.cristalia.biblioteca.model.Coluna;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -33,22 +32,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rafael.lopes
  */
-public class FrmColuna extends javax.swing.JFrame {
+public class FrmRegistroSolucaoReagente extends javax.swing.JFrame {
 
     private String ACESSO = new AcessoSistema().getAcessoSistema(this);
 
     /**
      * Creates new form NewJDialog
      */
-    public FrmColuna() {
+    public FrmRegistroSolucaoReagente() {
         initComponents();
-        Frames.setUpFrame(this, "Colunas", false);
+        Frames.setUpFrame(this, "Soluções Reagentes", false);
         read();
         btnNovo.setEnabled(AcessoSistema.criarDados(ACESSO));
         btnEditar.setEnabled(AcessoSistema.editarDados(ACESSO));
         btnExcluir.setEnabled(AcessoSistema.deletarDados(ACESSO));
-        btnColunaConfig.setEnabled(AcessoSistema.editarDados(ACESSO));
-    }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,8 +61,8 @@ public class FrmColuna extends javax.swing.JFrame {
         pnlColunas = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblColunas = new javax.swing.JTable();
-        txtPesquisarMetodologia = new javax.swing.JTextField();
+        tblSolucoes = new javax.swing.JTable();
+        txtPesquisar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         btnNovo = new javax.swing.JButton();
@@ -75,7 +73,15 @@ public class FrmColuna extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JToolBar.Separator();
         btnAtualizar = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JToolBar.Separator();
-        btnColunaConfig = new javax.swing.JButton();
+        btnEtiqueta = new javax.swing.JButton();
+        jSeparator11 = new javax.swing.JToolBar.Separator();
+        btnRelatorio = new javax.swing.JButton();
+        jSeparator10 = new javax.swing.JToolBar.Separator();
+        btnDescarte = new javax.swing.JButton();
+        jSeparator13 = new javax.swing.JToolBar.Separator();
+        btnReativar = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btnDescarte1 = new javax.swing.JButton();
         pnlAuditTrail = new javax.swing.JPanel();
         pnlAuditoria = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -86,21 +92,21 @@ public class FrmColuna extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Colunas"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Soluções"));
 
-        tblColunas.setModel(new javax.swing.table.DefaultTableModel(
+        tblSolucoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Coluna_Id", "Código", "Coluna", "Part Number", "Versão"
+                "Solução_Id", "Descrição", "Lote", "Quantidade", "Analista / Data", "Conferente / Data", "Versão"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -111,48 +117,48 @@ public class FrmColuna extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblColunas.setSurrendersFocusOnKeystroke(true);
-        tblColunas.getTableHeader().setReorderingAllowed(false);
-        tblColunas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblSolucoes.setSurrendersFocusOnKeystroke(true);
+        tblSolucoes.getTableHeader().setReorderingAllowed(false);
+        tblSolucoes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblColunasMouseClicked(evt);
+                tblSolucoesMouseClicked(evt);
             }
         });
-        tblColunas.addKeyListener(new java.awt.event.KeyAdapter() {
+        tblSolucoes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblColunasKeyReleased(evt);
+                tblSolucoesKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tblColunas);
-        if (tblColunas.getColumnModel().getColumnCount() > 0) {
-            tblColunas.getColumnModel().getColumn(0).setMinWidth(90);
-            tblColunas.getColumnModel().getColumn(0).setPreferredWidth(90);
-            tblColunas.getColumnModel().getColumn(0).setMaxWidth(90);
-            tblColunas.getColumnModel().getColumn(1).setMinWidth(90);
-            tblColunas.getColumnModel().getColumn(1).setPreferredWidth(90);
-            tblColunas.getColumnModel().getColumn(1).setMaxWidth(90);
-            tblColunas.getColumnModel().getColumn(3).setMinWidth(200);
-            tblColunas.getColumnModel().getColumn(3).setPreferredWidth(200);
-            tblColunas.getColumnModel().getColumn(3).setMaxWidth(200);
-            tblColunas.getColumnModel().getColumn(4).setMinWidth(80);
-            tblColunas.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tblColunas.getColumnModel().getColumn(4).setMaxWidth(80);
+        jScrollPane1.setViewportView(tblSolucoes);
+        if (tblSolucoes.getColumnModel().getColumnCount() > 0) {
+            tblSolucoes.getColumnModel().getColumn(0).setMinWidth(80);
+            tblSolucoes.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tblSolucoes.getColumnModel().getColumn(0).setMaxWidth(80);
+            tblSolucoes.getColumnModel().getColumn(2).setMinWidth(120);
+            tblSolucoes.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tblSolucoes.getColumnModel().getColumn(2).setMaxWidth(120);
+            tblSolucoes.getColumnModel().getColumn(3).setMinWidth(100);
+            tblSolucoes.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblSolucoes.getColumnModel().getColumn(3).setMaxWidth(100);
+            tblSolucoes.getColumnModel().getColumn(6).setMinWidth(80);
+            tblSolucoes.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tblSolucoes.getColumnModel().getColumn(6).setMaxWidth(80);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
         );
 
-        txtPesquisarMetodologia.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPesquisarMetodologiaKeyReleased(evt);
+                txtPesquisarKeyReleased(evt);
             }
         });
 
@@ -215,18 +221,74 @@ public class FrmColuna extends javax.swing.JFrame {
         jToolBar1.add(btnAtualizar);
         jToolBar1.add(jSeparator9);
 
-        btnColunaConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_col_config_32.png"))); // NOI18N
-        btnColunaConfig.setText("Config.");
-        btnColunaConfig.setFocusable(false);
-        btnColunaConfig.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnColunaConfig.setPreferredSize(new java.awt.Dimension(60, 60));
-        btnColunaConfig.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnColunaConfig.addActionListener(new java.awt.event.ActionListener() {
+        btnEtiqueta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_barcode.png"))); // NOI18N
+        btnEtiqueta.setText("Etiqueta");
+        btnEtiqueta.setFocusable(false);
+        btnEtiqueta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEtiqueta.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnEtiqueta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEtiqueta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnColunaConfigActionPerformed(evt);
+                btnEtiquetaActionPerformed(evt);
             }
         });
-        jToolBar1.add(btnColunaConfig);
+        jToolBar1.add(btnEtiqueta);
+        jToolBar1.add(jSeparator11);
+
+        btnRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_print.png"))); // NOI18N
+        btnRelatorio.setText("Relatório");
+        btnRelatorio.setFocusable(false);
+        btnRelatorio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRelatorio.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnRelatorio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorioActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnRelatorio);
+        jToolBar1.add(jSeparator10);
+
+        btnDescarte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_approval_32.png"))); // NOI18N
+        btnDescarte.setText("Ativar");
+        btnDescarte.setFocusable(false);
+        btnDescarte.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDescarte.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnDescarte.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDescarte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescarteActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDescarte);
+        jToolBar1.add(jSeparator13);
+
+        btnReativar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_close_window_32.png"))); // NOI18N
+        btnReativar.setText("Desativar");
+        btnReativar.setFocusable(false);
+        btnReativar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReativar.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnReativar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReativarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnReativar);
+        jToolBar1.add(jSeparator2);
+
+        btnDescarte1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_copy_32.png"))); // NOI18N
+        btnDescarte1.setText("Duplicar");
+        btnDescarte1.setFocusable(false);
+        btnDescarte1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDescarte1.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnDescarte1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDescarte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescarte1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDescarte1);
 
         javax.swing.GroupLayout pnlColunasLayout = new javax.swing.GroupLayout(pnlColunas);
         pnlColunas.setLayout(pnlColunasLayout);
@@ -239,10 +301,10 @@ public class FrmColuna extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisarMetodologia))
+                        .addComponent(txtPesquisar))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1179, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlColunasLayout.setVerticalGroup(
             pnlColunasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,14 +312,14 @@ public class FrmColuna extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlColunasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPesquisarMetodologia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tblPaneMetodologia.addTab("Reagentes", pnlColunas);
+        tblPaneMetodologia.addTab("Registro de Soluções", pnlColunas);
 
         pnlAuditTrail.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -268,7 +330,7 @@ public class FrmColuna extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Coluna_Id", "Versão", "MOD", "Código", "Código_MOD", "Tipo", "Tipo_MOD", "Fabricante", "Fabricante_MOD", "Marca", "Marca_MOD", "Fase", "Fase_MOD", "Tamanho", "Tamanho_MOD", "Diametro", "Diametro_MOD", "Particula", "Particula_MOD", "Part_Number", "Part_Number_MOD", "Obs", "Obs_MOD", "Computador / AD_User ", "Usuario", "Data Modificação", "Motivo", "Validação"
+                "Coluna_Id", "Versão", "MOD", "Cod_SAP", "Cod_SAP_MOD", "Tipo", "Tipo_MOD", "Fabricante", "Fabricante_MOD", "Marca", "Marca_MOD", "Fase", "Fase_MOD", "Tamanho", "Tamanho_MOD", "Diametro", "Diametro_MOD", "Particula", "Particula_MOD", "Part_Number", "Part_Number_MOD", "Obs", "Obs_MOD", "Computador / AD_User ", "Usuario", "Data Modificação", "Motivo", "Validação"
             }
         ) {
             Class[] types = new Class [] {
@@ -311,11 +373,11 @@ public class FrmColuna extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1133, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
         txtPesquisarAuditoria.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -388,22 +450,22 @@ public class FrmColuna extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPesquisarMetodologiaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarMetodologiaKeyReleased
-        TableSorter.TableSorter(tblColunas, txtPesquisarMetodologia);
-    }//GEN-LAST:event_txtPesquisarMetodologiaKeyReleased
+    private void txtPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarKeyReleased
+        TableSorter.TableSorter(tblSolucoes, txtPesquisar);
+    }//GEN-LAST:event_txtPesquisarKeyReleased
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         abrir();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblColunas.getSelectedRow() != -1) {
+        if (tblSolucoes.getSelectedRow() != -1) {
             atualizar();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if (tblColunas.getSelectedRow() != -1) {
+        if (tblSolucoes.getSelectedRow() != -1) {
             deletar();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -416,24 +478,52 @@ public class FrmColuna extends javax.swing.JFrame {
         TableSorter.TableSorter(tblAuditoria, txtPesquisarAuditoria);
     }//GEN-LAST:event_txtPesquisarAuditoriaKeyReleased
 
-    private void btnColunaConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColunaConfigActionPerformed
-        FrmColunaConfig frm = new FrmColunaConfig(this, true);
-        frm.setVisible(true);
-    }//GEN-LAST:event_btnColunaConfigActionPerformed
-
-    private void tblColunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblColunasMouseClicked
+    private void tblSolucoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSolucoesMouseClicked
         if (evt.getClickCount() == 2) {
             atualizar();
         }
-    }//GEN-LAST:event_tblColunasMouseClicked
+    }//GEN-LAST:event_tblSolucoesMouseClicked
 
-    private void tblColunasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblColunasKeyReleased
-        if (tblColunas.getSelectedRow() != -1) {
+    private void tblSolucoesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblSolucoesKeyReleased
+        if (tblSolucoes.getSelectedRow() != -1) {
             if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
                 deletar();
             }
         }
-    }//GEN-LAST:event_tblColunasKeyReleased
+    }//GEN-LAST:event_tblSolucoesKeyReleased
+
+    private void btnEtiquetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEtiquetaActionPerformed
+        if (tblSolucoes.getSelectedRow() != -1) {
+//            HashMap map = new HashMap();
+//            try {
+//                map.put("id_coluna", (Long) tblColuna.getValueAt(tblColuna.getSelectedRow(), 0));
+//                map.put("img", Thread.currentThread().getClass().getResourceAsStream("/Reports/ArrowUp.png"));
+//                Reports.imprimir("EtiquetaColuna.jasper", map);
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + ex);
+//            }
+        }
+    }//GEN-LAST:event_btnEtiquetaActionPerformed
+
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
+        //new FrmImprimirRelatorio(this, true).setVisible(true);
+    }//GEN-LAST:event_btnRelatorioActionPerformed
+
+    private void btnDescarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescarteActionPerformed
+        if (tblSolucoes.getSelectedRow() != -1) {
+            //descartar();
+        }
+    }//GEN-LAST:event_btnDescarteActionPerformed
+
+    private void btnReativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReativarActionPerformed
+        if (tblSolucoes.getSelectedRow() != -1) {
+            //reativar();
+        }
+    }//GEN-LAST:event_btnReativarActionPerformed
+
+    private void btnDescarte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescarte1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDescarte1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,24 +542,28 @@ public class FrmColuna extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmColuna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistroSolucaoReagente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new FrmColuna().setVisible(true);
+                new FrmRegistroSolucaoReagente().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnColunaConfig;
+    private javax.swing.JButton btnDescarte;
+    private javax.swing.JButton btnDescarte1;
     public static javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEtiqueta;
     public static javax.swing.JButton btnExcluir;
     public static javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnReativar;
+    private javax.swing.JButton btnRelatorio;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel5;
@@ -477,6 +571,10 @@ public class FrmColuna extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator10;
+    private javax.swing.JToolBar.Separator jSeparator11;
+    private javax.swing.JToolBar.Separator jSeparator13;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
@@ -485,32 +583,30 @@ public class FrmColuna extends javax.swing.JFrame {
     private javax.swing.JPanel pnlAuditoria;
     private javax.swing.JPanel pnlColunas;
     private javax.swing.JTable tblAuditoria;
-    private javax.swing.JTable tblColunas;
     private javax.swing.JTabbedPane tblPaneMetodologia;
+    private javax.swing.JTable tblSolucoes;
+    private javax.swing.JTextField txtPesquisar;
     private javax.swing.JTextField txtPesquisarAuditoria;
-    private javax.swing.JTextField txtPesquisarMetodologia;
     // End of variables declaration//GEN-END:variables
 
     public final void read() {
-        DefaultTableModel model = (DefaultTableModel) tblColunas.getModel();
-        ColunaDAO colDAO = new ColunaDAO();
+        DefaultTableModel model = (DefaultTableModel) tblSolucoes.getModel();
+        RegistroSolucaoReagenteDAO regsolReagenteDAO = new RegistroSolucaoReagenteDAO();
         model.setNumRows(0);
         try {
-            for (Coluna col : colDAO.findEntities(Coluna.class)) {
+            for (RegistroSolucaoReagente solReagente : regsolReagenteDAO.findEntities(RegistroSolucaoReagente.class)) {
                 model.addRow(new Object[]{
-                    col.getId(),
-                    col.getCodigo(),
-                    col.getFabricanteColuna().getConfiguracao() + " "
-                    + col.getMarcaColuna().getConfiguracao() + " - "
-                    + col.getTipoColuna().getConfiguracao() + " "
-                    + col.getTamanhoColuna().getConfiguracao() + "mm x "
-                    + col.getDiametroColuna().getConfiguracao() + "mm x "
-                    + col.getParticulaColuna().getConfiguracao() + "µm ",
-                    col.getPartNumber(),
-                    col.getVersion()
+                    solReagente.getId(),
+                    solReagente.getDescricao(),
+                    solReagente.getLote(),
+                    "",
+                    solReagente.getCriador().getUsuario() + " / " + DataHora.getStringDate(solReagente.getDataPreparo()),
+                    (solReagente.getAtivo() == null ? "" :
+                    solReagente.getConferente().getUsuario() + " / " + DataHora.getStringDateTime(solReagente.getDataConferencia())),
+                    solReagente.getVersion()
                 });
             }
-            carregarAuditoria();
+            //carregarAuditoria();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
         }
@@ -518,7 +614,7 @@ public class FrmColuna extends javax.swing.JFrame {
 
     private void abrir() {
         try {
-            new FrmColunaDados(null, true).setVisible(true);
+            new FrmRegistroSolucaoReagenteNovo(null, true).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
         } finally {
@@ -528,12 +624,12 @@ public class FrmColuna extends javax.swing.JFrame {
 
     private void atualizar() {
         if (AcessoSistema.editarDados(ACESSO)) {
-            ColunaDAO colDAO = new ColunaDAO();
+            RegistroSolucaoReagenteDAO regsolReagenteDAO = new RegistroSolucaoReagenteDAO();
             try {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                Coluna col = colDAO.findById(Coluna.class,
-                        (Long) tblColunas.getValueAt(tblColunas.getSelectedRow(), 0));
-                new FrmColunaDados(null, true, col).setVisible(true);
+                RegistroSolucaoReagente solReagente = regsolReagenteDAO.findById(RegistroSolucaoReagente.class,
+                        (Long) tblSolucoes.getValueAt(tblSolucoes.getSelectedRow(), 0));
+                new FrmRegistroSolucaoReagenteDados(null, true, solReagente).setVisible(true);
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e);
@@ -545,15 +641,15 @@ public class FrmColuna extends javax.swing.JFrame {
 
     private void deletar() {
         if (AcessoSistema.deletarDados(ACESSO)) {
-            ColunaDAO colDAO = new ColunaDAO();
+            RegistroSolucaoReagenteDAO regsolReagenteDAO = new RegistroSolucaoReagenteDAO();
             Senha senha = new Senha();
             try {
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Realmente deseja Excluir esse registro?", "Aviso", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0) {
                     if (senha.Salvar()) {
-                        Coluna col = colDAO.findById(Coluna.class,
-                                (Long) tblColunas.getValueAt(tblColunas.getSelectedRow(), 0));
-                        colDAO.remover(Coluna.class, col.getId());
+                        RegistroSolucaoReagente solReagente = regsolReagenteDAO.findById(RegistroSolucaoReagente.class,
+                                (Long) tblSolucoes.getValueAt(tblSolucoes.getSelectedRow(), 0));
+                        regsolReagenteDAO.remover(RegistroSolucaoReagente.class, solReagente.getId());
                     }
                 }
             } catch (Exception e) {
@@ -565,43 +661,43 @@ public class FrmColuna extends javax.swing.JFrame {
     }
 
     private void carregarAuditoria() {
-        DefaultTableModel model = (DefaultTableModel) tblAuditoria.getModel();
-        ColunaDAO colDAO = new ColunaDAO();
-        model.setNumRows(0);
-        try {
-            for (Coluna col : colDAO.readAuditoria()) {
-                model.addRow(new Object[]{
-                    col.getId(),
-                    col.getVersion(),
-                    col.getAudit().getMOD() == 0 ? "Criado"
-                    : (col.getAudit().getMOD() == 1 ? "Modificado" : "Removido"),
-                    col.getCodigo(),
-                    col.getCodigo_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getTipoColuna().getId(),
-                    col.getTipoColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getFabricanteColuna().getId(),
-                    col.getFabricanteColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getMarcaColuna().getId(),
-                    col.getMarcaColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getFaseColuna().getId(),
-                    col.getFaseColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getTamanhoColuna().getId(),
-                    col.getTamanhoColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getDiametroColuna().getId(),
-                    col.getDiametroColuna_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getParticulaColuna().getId(),
-                    col.getPartNumber(),
-                    col.getPartNumber_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getObs(),
-                    col.getObs_MOD() == false ? "Não Alterado" : "Alterado",
-                    col.getAudit().getComputador() + " / " + col.getAudit().getUserComputador(),
-                    col.getAudit().getUltimaModificacaoPor(),
-                    DataHora.getStringDateTime(col.getAudit().getUltimaModificacao()),
-                    col.getAudit().getMotivo()
-                });
-            }
-        } catch (Exception e) {
-        }
+//        DefaultTableModel model = (DefaultTableModel) tblAuditoria.getModel();
+//        SolucaoReagenteDAO solReagenteDAO = new SolucaoReagenteDAO();
+//        model.setNumRows(0);
+//        try {
+//            for (SolucaoReagente solReagente : solReagenteDAO.readAuditoria()) {
+//                model.addRow(new Object[]{
+//                    col.getId(),
+//                    col.getVersion(),
+//                    col.getAudit().getMOD() == 0 ? "Criado"
+//                    : (col.getAudit().getMOD() == 1 ? "Modificado" : "Removido"),
+//                    col.getCodigoSap(),
+//                    col.getCodigoSap_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getTipoColuna().getId(),
+//                    col.getTipoColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getFabricanteColuna().getId(),
+//                    col.getFabricanteColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getMarcaColuna().getId(),
+//                    col.getMarcaColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getFaseColuna().getId(),
+//                    col.getFaseColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getTamanhoColuna().getId(),
+//                    col.getTamanhoColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getDiametroColuna().getId(),
+//                    col.getDiametroColuna_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getParticulaColuna().getId(),
+//                    col.getPartNumber(),
+//                    col.getPartNumber_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getObs(),
+//                    col.getObs_MOD() == false ? "Não Alterado" : "Alterado",
+//                    col.getAudit().getComputador() + " / " + col.getAudit().getUserComputador(),
+//                    col.getAudit().getUltimaModificacaoPor(),
+//                    DataHora.getStringDateTime(col.getAudit().getUltimaModificacao()),
+//                    col.getAudit().getMotivo()
+//                });
+//            }
+//        } catch (Exception e) {
+//        }
 
     }
 

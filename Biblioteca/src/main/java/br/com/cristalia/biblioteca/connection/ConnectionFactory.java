@@ -80,9 +80,9 @@ public class ConnectionFactory {
             properties.put(JPA_JDBC_URL, System.getProperty("JDBC_URL"));
             properties.put(JPA_JDBC_USER, Cript.decodifica(System.getProperty("JDBC_USER")));
             properties.put(JPA_JDBC_PASSWORD, Cript.decodifica(System.getProperty("JDBC_PASSWORD")));
-            properties.put(HBM2DDL_AUTO, "update");//"validate" ou "update"
-            properties.put(SHOW_SQL, "true");
-            properties.put(FORMAT_SQL, "true");
+            properties.put(HBM2DDL_AUTO, "validate");//"validate" ou "update"
+            properties.put(SHOW_SQL, "false");//"true" ou "false"
+            properties.put(FORMAT_SQL, "false");//"true" ou "false"
             properties.put(C3P0_MIN_SIZE, "5");
             properties.put(C3P0_TIMEOUT, "2000");
             properties.put(C3P0_ACQUIRE_INCREMENT, "5");

@@ -132,13 +132,13 @@ public class FrmLogin extends javax.swing.JFrame implements Runnable {
         });
         jPanel1.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 420, 60));
 
-        pnlTopMenu.setBackground(new java.awt.Color(0, 153, 204));
+        pnlTopMenu.setBackground(new java.awt.Color(0, 153, 51));
         pnlTopMenu.setPreferredSize(new java.awt.Dimension(0, 40));
         pnlTopMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Symbol", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Colunas Cromatográficas");
+        jLabel15.setText("Reagentes & Soluções");
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         pnlTopMenu.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 220, 40));
 

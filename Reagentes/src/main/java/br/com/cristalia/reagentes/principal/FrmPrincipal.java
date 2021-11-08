@@ -14,8 +14,8 @@ import br.com.cristalia.biblioteca.model.Usuario;
 import br.com.cristalia.biblioteca.util.AcessoSistema;
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.MouseEventButton;
-import br.com.cristalia.reagentes.view.FrmDocumentos;
 import br.com.cristalia.reagentes.view.FrmReagente;
+import br.com.cristalia.reagentes.view.FrmRegistroSolucaoReagente;
 import java.awt.AWTEvent;
 import java.awt.Cursor;
 import java.awt.Toolkit;
@@ -24,7 +24,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
-import static jdk.vm.ci.common.InitTimer.timer;
 
 /**
  *
@@ -41,7 +40,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         pnlReagente.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmReagente.class.getSimpleName())));
-        pnlDocumentos.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmDocumentos.class.getSimpleName())));
+        pnlRegistroSolucoes.setVisible(AcessoSistema.acessoDados(new AcessoSistema().getAcessoSistema(FrmRegistroSolucaoReagente.class.getSimpleName())));
         carregar();
         checkTempoInatividade();
     }
@@ -67,15 +66,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlPrincipal = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
-        pnlDocumentos = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         lblLaboratorio = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         pnlReagente = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        pnlRegistroSolucoes = new javax.swing.JPanel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        lblLaboratorio1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,7 +132,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI Symbol", 0, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_chemistry_lab_32.png"))); // NOI18N
-        jLabel15.setText("Reagentes");
+        jLabel15.setText("Reagentes / Soluções");
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -170,37 +169,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        pnlDocumentos.setBackground(new java.awt.Color(255, 255, 255));
-        pnlDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnlDocumentosMouseExited(evt);
-            }
-        });
-        pnlDocumentos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_attach_32.png"))); // NOI18N
-        jLabel28.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
-
-        jLabel29.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel29.setText("Digitalizados");
-        jLabel29.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 110, -1));
-
-        jLabel30.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel30.setText("Documentos");
-        jLabel30.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlDocumentos.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 6, 110, -1));
-
         lblLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLaboratorio.setText("Reagentes");
 
@@ -229,6 +197,34 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlReagente.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 100, -1));
 
+        pnlRegistroSolucoes.setBackground(new java.awt.Color(255, 255, 255));
+        pnlRegistroSolucoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlRegistroSolucoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlRegistroSolucoesMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlRegistroSolucoesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnlRegistroSolucoesMouseExited(evt);
+            }
+        });
+        pnlRegistroSolucoes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagem/icon_tubo_ensaio_32.png"))); // NOI18N
+        jLabel34.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlRegistroSolucoes.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
+
+        jLabel35.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel35.setText("Soluções");
+        jLabel35.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlRegistroSolucoes.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 6, 80, 30));
+
+        lblLaboratorio1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblLaboratorio1.setText("Solução Reagente");
+
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
@@ -242,7 +238,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLaboratorio)
                             .addComponent(pnlReagente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlRegistroSolucoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLaboratorio1))
                         .addGap(0, 639, Short.MAX_VALUE))))
         );
         pnlPrincipalLayout.setVerticalGroup(
@@ -254,11 +251,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlReagente, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addComponent(lblLaboratorio1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(397, Short.MAX_VALUE))
+                .addComponent(pnlRegistroSolucoes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(359, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(pnlPrincipal);
@@ -297,18 +296,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         dadosUsuario();
     }//GEN-LAST:event_jLabel5MouseReleased
 
-    private void pnlDocumentosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseExited
-        MouseEventButton.setMouseExited(pnlDocumentos);
-    }//GEN-LAST:event_pnlDocumentosMouseExited
-
-    private void pnlDocumentosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseEntered
-        MouseEventButton.setMouseEntered(pnlDocumentos);
-    }//GEN-LAST:event_pnlDocumentosMouseEntered
-
-    private void pnlDocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDocumentosMouseClicked
-        Frames.carregarJFrame(FrmDocumentos.class);
-    }//GEN-LAST:event_pnlDocumentosMouseClicked
-
     private void pnlReagenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlReagenteMouseClicked
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Frames.carregarJFrame(FrmReagente.class);
@@ -322,6 +309,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void pnlReagenteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlReagenteMouseExited
         MouseEventButton.setMouseExited(pnlReagente);
     }//GEN-LAST:event_pnlReagenteMouseExited
+
+    private void pnlRegistroSolucoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegistroSolucoesMouseClicked
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        Frames.carregarJFrame(FrmRegistroSolucaoReagente.class);
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_pnlRegistroSolucoesMouseClicked
+
+    private void pnlRegistroSolucoesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegistroSolucoesMouseEntered
+        MouseEventButton.setMouseEntered(pnlRegistroSolucoes);
+    }//GEN-LAST:event_pnlRegistroSolucoesMouseEntered
+
+    private void pnlRegistroSolucoesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlRegistroSolucoesMouseExited
+        MouseEventButton.setMouseExited(pnlRegistroSolucoes);
+    }//GEN-LAST:event_pnlRegistroSolucoesMouseExited
 
     /**
      * @param args the command line arguments
@@ -445,9 +446,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -455,12 +455,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lblLabMenuTop;
     private javax.swing.JLabel lblLaboratorio;
+    private javax.swing.JLabel lblLaboratorio1;
     private javax.swing.JLabel lblLimsMenuTop;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblLogoMenuTop;
-    private javax.swing.JPanel pnlDocumentos;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JPanel pnlReagente;
+    private javax.swing.JPanel pnlRegistroSolucoes;
     private javax.swing.JPanel pnlTopMenu;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,7 +14,7 @@
  * Você deve ter recebido uma cópia da GNU General Public License
  *  juntamente com este programa. Caso contrário, veja <http://www.gnu.org/licenses/>.
  */
-package br.com.cristalia.colunas.model;
+package br.com.cristalia.biblioteca.model;
 
 import br.com.cristalia.biblioteca.audit.Audit;
 import br.com.cristalia.biblioteca.audit.AuditListener;
@@ -27,8 +27,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.DynamicInsert;
@@ -36,40 +36,39 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
- /**
- * O <code>Usuario</code> classe Usuario
+/**
+ * O <code>Usuario</code> classe Coluna Config
  *
  * @author rafae.lopes
  * @version 1.00
  */
 @Entity
-@Table(name = "tb_coluna_vaga")
+@Table(name = "tb_coluna_config")
+@NamedQueries({
+    @NamedQuery(name = "ColunaConfig.findAll", query = "SELECT conf FROM ColunaConfig conf"),
+    @NamedQuery(name = "ColunaConfig.checkIsExits", query = "SELECT conf FROM ColunaConfig conf WHERE conf.tipo = :tipo AND conf.configuracao = :valor"),
+    @NamedQuery(name = "ColunaConfig.findColunaConfigByTipo", query = "SELECT conf FROM ColunaConfig conf WHERE conf.tipo = :tipo ORDER BY conf.configuracao ASC")})
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @Audited(withModifiedFlag = true)
-@AuditTable(value = "tba_coluna_vaga_auditoria")
+@AuditTable(value = "tba_coluna_config_auditoria")
 @EntityListeners(AuditListener.class)
-public class ColunaVaga implements EntidadeBase, Serializable {
+public class ColunaConfig implements EntidadeBase, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "tipo")
+    private String tipo;
     
-    @Column(name = "vaga")
-    private Integer vaga;
+    @Column(name = "configuracao")
+    private String configuracao;
     
-    @ManyToOne()
-    @JoinColumn(name = "coluna_storage_id", referencedColumnName = "id")
-    private ColunaStorage colunaStorage;
-    
-    @ManyToOne()
-    @JoinColumn(name = "coluna_util_id", referencedColumnName = "id")
-    private ColunaUtil colunaUtil;
-    
-    @Column(name = "obs")
-    private String obs;
+    @Column(name = "descricao")
+    private String descricao;
 
     @Column(name = "version")
     private Integer version;
@@ -78,22 +77,19 @@ public class ColunaVaga implements EntidadeBase, Serializable {
     private Audit audit = new Audit();
 
     @Transient
-    private Boolean Vaga_MOD;
-
-    @Transient
-    private Boolean ColunaStorage_MOD;
+    private Boolean Tipo_MOD;
     
     @Transient
-    private Boolean ColunaUtil_MOD;
+    private Boolean Configuracao_MOD;
     
     @Transient
-    private Boolean Obs_MOD;
+    private Boolean Descricao_MOD;
     
-    public ColunaVaga() {
+    public ColunaConfig() {
     }
 
-    public ColunaVaga(Long id) {
-        this.id = id;
+    public ColunaConfig(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override
@@ -105,28 +101,28 @@ public class ColunaVaga implements EntidadeBase, Serializable {
         this.id = id;
     }
 
-    public Integer getVaga() {
-        return vaga;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setVaga(Integer vaga) {
-        this.vaga = vaga;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public ColunaStorage getColunaStorage() {
-        return colunaStorage;
+    public String getConfiguracao() {
+        return configuracao;
     }
 
-    public void setColunaStorage(ColunaStorage colunaStorage) {
-        this.colunaStorage = colunaStorage;
+    public void setConfiguracao(String configuracao) {
+        this.configuracao = configuracao;
     }
 
-    public String getObs() {
-        return obs;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setObs(String obs) {
-        this.obs = obs;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Integer getVersion() {
@@ -145,50 +141,36 @@ public class ColunaVaga implements EntidadeBase, Serializable {
         this.audit = audit;
     }
 
-    public Boolean getVaga_MOD() {
-        return Vaga_MOD;
+    public Boolean getTipo_MOD() {
+        return Tipo_MOD;
     }
 
-    public void setVaga_MOD(Boolean Vaga_MOD) {
-        this.Vaga_MOD = Vaga_MOD;
+    public void setTipo_MOD(Boolean Tipo_MOD) {
+        this.Tipo_MOD = Tipo_MOD;
     }
 
-    public Boolean getObs_MOD() {
-        return Obs_MOD;
+    public Boolean getConfiguracao_MOD() {
+        return Configuracao_MOD;
     }
 
-    public void setObs_MOD(Boolean Obs_MOD) {
-        this.Obs_MOD = Obs_MOD;
+    public void setConfiguracao_MOD(Boolean Configuracao_MOD) {
+        this.Configuracao_MOD = Configuracao_MOD;
     }
 
-    public Boolean getColunaStorage_MOD() {
-        return ColunaStorage_MOD;
+    public Boolean getDescricao_MOD() {
+        return Descricao_MOD;
     }
 
-    public void setColunaStorage_MOD(Boolean ColunaStorage_MOD) {
-        this.ColunaStorage_MOD = ColunaStorage_MOD;
+    public void setDescricao_MOD(Boolean Descricao_MOD) {
+        this.Descricao_MOD = Descricao_MOD;
     }
-
-    public ColunaUtil getColunaUtil() {
-        return colunaUtil;
-    }
-
-    public void setColunaUtil(ColunaUtil colunaUtil) {
-        this.colunaUtil = colunaUtil;
-    }
-
-    public Boolean getColunaUtil_MOD() {
-        return ColunaUtil_MOD;
-    }
-
-    public void setColunaUtil_MOD(Boolean ColunaUtil_MOD) {
-        this.ColunaUtil_MOD = ColunaUtil_MOD;
-    }
+    
+    
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -200,8 +182,9 @@ public class ColunaVaga implements EntidadeBase, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ColunaVaga other = (ColunaVaga) obj;
+        final ColunaConfig other = (ColunaConfig) obj;
         return Objects.equals(this.id, other.id);
     }
 
+    
 }

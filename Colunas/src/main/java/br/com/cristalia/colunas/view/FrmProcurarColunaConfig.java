@@ -18,8 +18,8 @@ package br.com.cristalia.colunas.view;
 
 import br.com.cristalia.biblioteca.util.Frames;
 import br.com.cristalia.biblioteca.util.TableSorter;
-import br.com.cristalia.colunas.dao.ColunaConfigDAO;
-import br.com.cristalia.colunas.model.ColunaConfig;
+import br.com.cristalia.biblioteca.dao.ColunaConfigDAO;
+import br.com.cristalia.biblioteca.model.ColunaConfig;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
